@@ -15,5 +15,11 @@ export default defineSchema({
   words: defineTable({
     category: v.string(),
     word: v.string(),
+  }),
+  gameflow: defineTable({
+    state: v.string(),
+    machine: v.string(),
+    room: v.string(),
   })
+  .index('by_room', ['room']),
 });

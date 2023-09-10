@@ -1,5 +1,3 @@
-import { useUser } from "@clerk/nextjs";
-
 import { createMachine } from 'xstate';
 
 export const gameMachine = createMachine({
@@ -98,4 +96,3 @@ export const gameMachine = createMachine({
         },
     }
 });
-
