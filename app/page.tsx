@@ -1,7 +1,6 @@
 "use client";
 //bg-red-700 bg-blue-700 bg-black bg-yellow-200 bg-neutral bg-blue-500 bg-red-500
 // tailwind hack to make sure dynamic colors are available
-import { useContext } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserButton, useUser } from "@clerk/nextjs";
@@ -17,11 +16,7 @@ import { GameContext, gameMachine } from "@/lib/state/gameMachine";
 
 export default function Home() {
   const location = 'lobby';
-  const globalServices = useContext(GlobalStateContext);
   
-  if (!globalServices) throw new Error('No context provider');
-  // const [state, send] = useActor(globalServices.gameService);
-
   const { isLoaded, user } = useUser();
   const userId = user ? user.id : '';
   const username = user?.username;
