@@ -16,7 +16,7 @@ export default function Home() {
   const context = state.context as GameContext;
 
   const resetGameState = () => {
-    fetch(`${process.env['BASE_URL']}/api/gameflow/`, { method: 'PUT', body: JSON.stringify({ room: 'lobby' }) })
+    fetch(`/api/gameflow/`, { method: 'PUT', body: JSON.stringify({ room: 'lobby' }) })
   }
 
   const startGame = () => {

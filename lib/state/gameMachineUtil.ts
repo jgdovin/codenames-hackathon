@@ -9,5 +9,5 @@ export const StateFromDb = () => {
 }
 
 export const sendAction = (action: string, value = '') => {
-  fetch(`${process.env['BASE_URL']}/api/gameflow/`, { method: 'POST', body: JSON.stringify({ room: 'lobby', action, value}) })
+  fetch(`/api/gameflow/`, { method: 'POST', body: JSON.stringify({ room: 'lobby', action, value}) })
 }
