@@ -15,7 +15,7 @@ const page = () => {
   }, [])
 
   const updateNickname = () => {
-    console.log('test')
+    // @ts-ignore
     const newNickname = ref?.current?.value
     localStorage.setItem('nickname', newNickname)
     setNickname(newNickname)
