@@ -1,20 +1,19 @@
 "use client";
-//bg-red-500 bg-blue-500 bg-black bg-yellow-200 bg-neutral
+//bg-red-700 bg-blue-700 bg-black bg-yellow-200 bg-neutral bg-blue-500 bg-red-500
 // tailwind hack to make sure dynamic colors are available
 import { useContext } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { GlobalStateContext } from "@/components/context/GlobalState";
-import { useActor } from '@xstate/react';
 
 import TeamCard from '@/components/TeamCard'
 import GameCard from "@/components/GameCard";
 
 import PlayersPane from "@/components/presence/PlayersPane";
-import { stateFromDb } from "@/lib/state/getStateFromDb";
-import { State } from "xstate";
-import { gameMachine } from "@/lib/state/gameMachine";
+import { sendAction, stateFromDb } from "@/lib/state/gameMachineUtil";
+import { State, interpret } from "xstate";
+import { GameContext, gameMachine } from "@/lib/state/gameMachine";
 
 export default function Home() {
   const location = 'lobby';
@@ -26,20 +25,22 @@ export default function Home() {
   const { isLoaded, user } = useUser();
   const userId = user ? user.id : '';
   const username = user?.username;
-  const words = useQuery(api.words.getWordsForGame);
+
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room: 'lobby' })
-  if (!latestStateFromDB) return null;
-  const stateDef = JSON.parse(latestStateFromDB.state) || gameMachine.initialState;
+
+  const stateDef = latestStateFromDB ?  JSON.parse(latestStateFromDB.state) : gameMachine.initialState;
   
-  const state = State.create(stateDef);
+  const state = State.create(stateFromDb())
+  const context = state.context as GameContext;
+  const service = interpret(gameMachine).start(state);
 
   const resetGameState = () => {
     fetch('http://localhost:3000/api/gameflow/', { method: 'PUT', body: JSON.stringify({ room: 'lobby' }) })
   }
 
   const startGame = () => {
-    fetch('http://localhost:3000/api/gameflow/', { method: 'POST', body: JSON.stringify({ room: 'lobby', action: 'start.game' }) })
+    sendAction('start.game')
   }
 
   return (
@@ -54,11 +55,11 @@ export default function Home() {
           {/* { user? <PlayersPane user={user} /> : null } */}
         </div>
         <div className="grid grid-cols-5 bg-slate-500 place-items-center place-content-center gap-4 p-10">
-          {words?.map((word) => (<GameCard key={word._id} word={word} />))}
+          {context.cards.map((card) => (<GameCard key={card.word} card={card} />))}
         </div>
         <div className="bg-slate-600 h-full">
           <div>Game Log</div>
-          <div>CLUE HERE</div>
+          <div>{context.clue}</div>
         </div>
       </div>
 

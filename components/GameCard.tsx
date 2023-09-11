@@ -1,20 +1,17 @@
 import { cn } from '@/lib/util/cn'
+import { GameCard } from '@/lib/state/gameMachine'
 
-type GameCardProps = {
-    _id: string
-    word: string
-    color: string
-}
 
-const GameCard = ({ word }: { word: GameCardProps }) => {
+const GameCard = ({ card }: { card: GameCard }) => {
+    
     return (
         <div
             className={cn(
                 'w-full h-24 flex items-center justify-center rounded-lg cursor-pointer ',
-                word.color
+                card.color
             )}
         >
-            <p className="text-3xl">{word.word}</p>
+            <p className="text-3xl">{card.word}</p>
         </div>
     )
 }

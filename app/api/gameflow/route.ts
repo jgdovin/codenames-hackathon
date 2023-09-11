@@ -1,4 +1,5 @@
 
+export const dynamc = 'force-dynamic'
 const { ConvexHttpClient } = require('convex/browser');
 const { api } = require('@/convex/_generated/api');
 const client = new ConvexHttpClient(process.env["CONVEX_URL"]);
@@ -12,12 +13,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const data = await request.json();
-  console.log(0)
+
   const workflowData = await client.query(api.gameflow.get, { room: 'lobby' });
 
   if (!workflowData) throw new Error('no gameflow machine available');
 
-  const newState = gameMachine.transition(gameMachine.resolveState(JSON.parse(workflowData.state)), {type: data.action});
+  const newState = gameMachine.transition(gameMachine.resolveState(JSON.parse(workflowData.state)), {type: data.action, value: data.value});
 
   client.mutation(api.gameflow.post, { room: 'lobby', state: JSON.stringify(newState) });
 
@@ -25,6 +26,6 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const test = await client.mutation(api.gameflow.update, { room: 'lobby', state: JSON.stringify(gameMachine.initialState), machine: JSON.stringify(gameMachine) });
+  await client.mutation(api.gameflow.createGame, { room: 'lobby'});
   return new Response('ok', { status: 200 });
 }
