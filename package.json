@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "npm-run-all --parallel dev:server dev:client",
-    "build": "tsc && pnpm next build",
-    "dev:server": "pnpm convex dev",
-    "dev:client": "pnpm next dev"
+    "build": "tsc && yarn next build",
+    "dev:server": "yarn convex dev",
+    "dev:client": "yarn next dev"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.5",
