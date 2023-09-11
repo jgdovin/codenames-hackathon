@@ -63,6 +63,7 @@ export const post = mutation({
   args: { room: v.string(), state: v.string() },
   handler: async ( ctx, { room, state }) => {
     const workflowData = await ctx.db.query('gameflow').withIndex('by_room', (q) => q.eq('room', room)).unique();
+
     if (!workflowData) throw new Error('no gameflow machine availables');
     await ctx.db.patch(workflowData._id, { state });
   }
@@ -98,7 +99,7 @@ export const createGame = mutation({
 
     const existing = await ctx.db
       .query("gameflow")
-      .withIndex("by_room", (q) => q.eq("room", 'lobby'))
+      .withIndex("by_room", (q) => q.eq("room", room))
       .unique();
     if (existing) {
       await ctx.db.delete(existing?._id)

@@ -1,53 +1,38 @@
-"use client";
-//bg-red-700 bg-blue-700 bg-black bg-yellow-200 bg-neutral bg-blue-500 bg-red-500
-// tailwind hack to make sure dynamic colors are available
+'use client'
 
-import TeamCard from '@/components/TeamCard'
-import GameCard from "@/components/GameCard";
+import { useRef, useState, useEffect } from "react"
 
-import { sendAction, StateFromDb } from "@/lib/state/gameMachineUtil";
-import { State, interpret } from "xstate";
-import { GameContext, gameMachine } from "@/lib/state/gameMachine";
+const page = () => {
+  const ref = useRef(null)
+  const [isEditing, setIsEditing] = useState(false);
+  const [nickname, setNickname] = useState('');
 
-export default function Home() {
-  const location = 'lobby';
-  
-  const state = State.create(StateFromDb()) as State<GameContext>;
-  const context = state.context as GameContext;
+  useEffect(() => {
+    const nickname = localStorage.getItem('nickname')
+    if (nickname) {
+      setNickname(nickname)
+    }
+  }, [])
 
-  const resetGameState = () => {
-    fetch(`/api/gameflow/`, { method: 'PUT', body: JSON.stringify({ room: 'lobby' }) })
-  }
-
-  const startGame = () => {
-    sendAction('start.game')
+  const updateNickname = () => {
+    console.log('test')
+    const newNickname = ref?.current?.value
+    localStorage.setItem('nickname', newNickname)
+    setNickname(newNickname)
+    setIsEditing(false);
   }
 
   return (
-    <main className="flex">
-      <div className="flex w-80 h-screen bg-red-700 place-content-center place-items-center">
-        <TeamCard state={state} color='red' />
-      </div>
-      <div className="w-full flex flex-col">
-        <div className="bg-slate-600 h-full">
-          <button onClick={resetGameState}>Reset State</button>
-          { state.matches('lobby') ? <button onClick={startGame}>Start Game</button> : null }
-          {/* { user? <PlayersPane user={user} /> : null } */}
-        </div>
-        <div className="grid grid-cols-5 bg-slate-500 place-items-center place-content-center gap-4 p-10">
-          {!state.matches('lobby') && context.cards.map((card) => (<GameCard key={card.word} card={card} />))}
-        </div>
-        <div className="bg-slate-600 h-full">
-          <div>Game Log</div>
-          <div>{context.clue}</div>
+    <div>
+    <div className='w-screen h-screen flex flex-col gap-4 items-center justify-center'>
+        <div className='bg-slate-700 w-96 h-36 rounded-xl flex flex-col justify-center items-center gap-6'>
+            { isEditing || !nickname ? <div><input type="text" placeholder='set your nickname' defaultValue={nickname} className='text-black' ref={ref} /> <button onClick={() => updateNickname()}>Send</button></div> : 
+            <div><span className='mr-4'>{nickname}</span> <button onClick={() => setIsEditing(true)}>Edit</button></div> }
+            { nickname ? <div className='text-white'><button className='bg-blue-500 hover:bg-blue-700 text-slate-100 font-bold py-2 px-4 rounded'>Start New Game</button></div> : null }
         </div>
       </div>
-
-      <div className="flex flex-col w-80 h-screen bg-red-700 place-content-center place-items-center">
-        <div className="absolute top-4 right-4 flex gap-4 place-content-center place-items-center">
-        </div>
-        <TeamCard state={state} color='blue' />
-      </div>
-    </main>
-  );
+    </div>
+  )
 }
+
+export default page

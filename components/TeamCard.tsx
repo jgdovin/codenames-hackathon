@@ -22,7 +22,7 @@ const TeamCard = ({color, state}: {color: string, state: any}) => {
               </> :
               <div>
                 <button onClick={() => {}}>Submit Guess</button>  
-                <button onClick={() => {sendAction('end.turn')}}>End Guessing</button>  
+                <button onClick={() => {sendAction('end.turn', 'test')}}>End Guessing</button>  
               </div>
             }
           </div>

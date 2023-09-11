@@ -1,0 +1,33 @@
+POST https://illustrious-blancmange-804660.netlify.app/api/gameflow HTTP/1.1
+content-type: application/json
+
+{
+    "room": "lobby",
+    "action": "start.game"
+}
+
+###
+
+PUT http://localhost:3000/api/gameflow HTTP/1.1
+content-type: application/json
+    
+    {
+        "room": "lobby"
+    }
+
+###
+
+GET http://localhost:3000/api/gameflow HTTP/1.1
+
+###
+
+GET http://localhost:3000/api/words HTTP/1.1
+
+###
+
+PUT https://illustrious-blancmange-804660.netlify.app/api/gameflow HTTP/1.1
+content-type: application/json
+
+{
+    "room": "lobby",
+}
