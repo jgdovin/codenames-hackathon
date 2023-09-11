@@ -2,6 +2,3 @@
   framework = "next"
   command = "pnpm run dev"
   autoLaunch = false
-[[edge_functions]]
-  path = "/"
-  function = "workflow"
