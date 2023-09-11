@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+          <ClerkProvider>
             <ConvexClientProvider>{children}</ConvexClientProvider>
+          </ClerkProvider>
       </body>
     </html>
   )
