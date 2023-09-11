@@ -1,4 +1,4 @@
 [dev]
   framework = "next"
-  command = "pnpm run dev"
+  command = "yarn run dev"
   autoLaunch = false
