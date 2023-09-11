@@ -35,7 +35,7 @@ export default function Home() {
           {/* { user? <PlayersPane user={user} /> : null } */}
         </div>
         <div className="grid grid-cols-5 bg-slate-500 place-items-center place-content-center gap-4 p-10">
-          {context.cards.map((card) => (<GameCard key={card.word} card={card} />))}
+          {!state.matches('lobby') && context.cards.map((card) => (<GameCard key={card.word} card={card} />))}
         </div>
         <div className="bg-slate-600 h-full">
           <div>Game Log</div>

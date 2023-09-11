@@ -73,6 +73,8 @@ export const createGame = mutation({
   args: { room: v.string() },
   handler: async ( ctx, { room }) => {
     const redStartCards = Math.random() > 0.5 ? 9 : 8;
+    const wordsTest = require('../data/sampleNormalWords.jsonl')
+    console.log(wordsTest);
     const words = await ctx.db.query("words").collect();
 
     const shuffledWords = shuffleAndSliceArray(words).map(

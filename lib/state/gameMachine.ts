@@ -18,7 +18,7 @@ export const gameMachine = createMachine({
     predictableActionArguments: true,
     initial: 'lobby',
     context: {
-        cards: [{ word: 'test', team: 'red', color: 'bg-red', revealed: false}],
+        cards: [],
         clue:'',
         redteamCardsRemaining: 0,
         blueteamCardsRemaining: 0,
