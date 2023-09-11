@@ -7,7 +7,7 @@ const UPDATE_MS = 5000;
 type FacePileProps = {
   othersPresence?: PresenceData<{ emoji: string }>[];
 };
-export default ({ othersPresence }: FacePileProps) => {
+const FacePile = ({ othersPresence }: FacePileProps) => {
   const [, setNow] = useState(Date.now());
   useEffect(() => {
     const intervalId = setInterval(() => setNow(Date.now()), UPDATE_MS);
@@ -49,3 +49,5 @@ export default ({ othersPresence }: FacePileProps) => {
     </div>
   );
 };
+
+export default FacePile;

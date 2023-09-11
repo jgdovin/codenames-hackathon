@@ -11,7 +11,7 @@ import TeamCard from '@/components/TeamCard'
 import GameCard from "@/components/GameCard";
 
 import PlayersPane from "@/components/presence/PlayersPane";
-import { sendAction, stateFromDb } from "@/lib/state/gameMachineUtil";
+import { sendAction, StateFromDb } from "@/lib/state/gameMachineUtil";
 import { State, interpret } from "xstate";
 import { GameContext, gameMachine } from "@/lib/state/gameMachine";
 
@@ -31,7 +31,7 @@ export default function Home() {
 
   const stateDef = latestStateFromDB ?  JSON.parse(latestStateFromDB.state) : gameMachine.initialState;
   
-  const state = State.create(stateFromDb())
+  const state = State.create(StateFromDb()) as State<GameContext>;
   const context = state.context as GameContext;
   const service = interpret(gameMachine).start(state);
 

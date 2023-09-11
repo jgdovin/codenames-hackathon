@@ -10,7 +10,7 @@ const Emojis =
   );
 
 const PresencePane = ({userId, username}: {userId: string | undefined, username: string}) => {
-  if (!userId) return;
+
   const [location, setLocation] = useState('RoomA');
   const [data, others, updatePresence] = usePresence(
     location,

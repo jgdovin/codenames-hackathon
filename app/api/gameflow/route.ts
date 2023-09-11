@@ -1,5 +1,4 @@
 
-export const dynamc = 'force-dynamic'
 const { ConvexHttpClient } = require('convex/browser');
 const { api } = require('@/convex/_generated/api');
 const client = new ConvexHttpClient(process.env["CONVEX_URL"]);

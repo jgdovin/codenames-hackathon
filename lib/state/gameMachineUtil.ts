@@ -2,7 +2,7 @@ import { useQuery } from 'convex/react';
 import { gameMachine } from '@/lib/state/gameMachine';
 import { api } from '@/convex/_generated/api';
 
-export const stateFromDb = () => {
+export const StateFromDb = () => {
   const latestStateFromDB = useQuery(api.gameflow.get, { room: 'lobby' })
   if (!latestStateFromDB) return gameMachine.initialState;
   return JSON.parse(latestStateFromDB.state) || gameMachine.initialState;

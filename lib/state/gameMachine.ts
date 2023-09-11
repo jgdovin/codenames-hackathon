@@ -1,5 +1,11 @@
 import { createMachine } from 'xstate';
 
+export interface GameCard {
+    word: string;
+    team: 'red' | 'blue' | 'neutral' | 'black';
+    revealed: boolean;
+    color: string;
+}
 
 export interface GameContext {
     cards: any[];
