@@ -25,7 +25,6 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  console.log('is this thing on?')
   await client.mutation(api.gameflow.createGame, { room: 'lobby'});
   return new Response('ok', { status: 200 });
 }

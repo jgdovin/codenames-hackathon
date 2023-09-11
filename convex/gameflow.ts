@@ -73,9 +73,7 @@ export const createGame = mutation({
   args: { room: v.string() },
   handler: async ( ctx, { room }) => {
     const redStartCards = Math.random() > 0.5 ? 9 : 8;
-    const wordsTest = require('../data/sampleNormalWords.jsonl')
-    console.log(wordsTest);
-    const words = await ctx.db.query("words").collect();
+    const words = require('../data/sampleWords.json')
 
     const shuffledWords = shuffleAndSliceArray(words).map(
       (word: WordInterface, index: number) => {
@@ -94,6 +92,7 @@ export const createGame = mutation({
       redteamCardsRemaining: redStartCards,
       blueteamCardsRemaining: 17-redStartCards,
     }
+    // @ts-ignore
     const machine = gameMachine.withContext(context)
 
     const existing = await ctx.db
