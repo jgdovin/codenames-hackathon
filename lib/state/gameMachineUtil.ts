@@ -1,11 +1,11 @@
-import { useQuery } from 'convex/react';
-import { gameMachine } from '@/lib/state/gameMachine';
-import { api } from '@/convex/_generated/api';
+const { ConvexHttpClient } = require('convex/browser');
+const { api } = require('@/convex/_generated/api');
 
-export const StateFromDb = (room: string) => {
-  const latestStateFromDB = useQuery(api.gameflow.get, { room })
-  if (!latestStateFromDB) return gameMachine.initialState;
-  return JSON.parse(latestStateFromDB.state) || gameMachine.initialState;
+
+export const StateFromDb = async (room: string) => {
+  const client = new ConvexHttpClient(process.env["CONVEX_URL"]);
+  const res = await client.query(api.gameflow.get, { room } );
+  return res;
 }
 
 export const sendAction = (action: string, room: string, value = '') => {

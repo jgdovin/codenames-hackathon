@@ -16,6 +16,7 @@ import type {
 } from "convex/server";
 import type * as gameflow from "../gameflow";
 import type * as presence from "../presence";
+import type * as rooms from "../rooms";
 import type * as words from "../words";
 
 /**
@@ -29,6 +30,7 @@ import type * as words from "../words";
 declare const fullApi: ApiFromModules<{
   gameflow: typeof gameflow;
   presence: typeof presence;
+  rooms: typeof rooms;
   words: typeof words;
 }>;
 export declare const api: FilterApi<

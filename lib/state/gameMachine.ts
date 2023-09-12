@@ -8,13 +8,13 @@ export interface GameCard {
 }
 
 export interface GameContext {
-    cards: any[];
+    cards: never[];
     clue: string;
     redteamCardsRemaining: number;
     blueteamCardsRemaining: number;
 }
 export const gameMachine = createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgBsB7AIyoE8BiWAF3QCcmSp1UwBtABgC6iUAAcKsXE1wV8IkAA9EAJgCs-EgDYAHABZtAdn6bNARgOnT-VQBoQtFQGZlJU9u2OAnOtW7HBgwBfQLs0LDxCUkoaBmY2Di4eXlNhJBBxSWlZeSUENQ0dfSMTc0trOwcENxdHTWVPU1UDbW9jWuDQjBwCYhJWSCYwbhJYUVoMZjBWeihcADcwEkwyAFc+IXkMqRk5NNzlfxIDR1VNfV9lfg9NW3tET20XVUc9bUs-A08rjpAw7si+gMhqhOGtYJJ8FBGCsqKgpKC4LABKkxBJttk9oh-J5XL5tJp+PxPLpVMTiRV7qYXLp+LoCWcDpdDD8-hFev0IINhlAwRCoQRMBRWP1MAlecjNmisrtQLkCdpXJ5mpZTCT+JdHBSEJ4ziQ2s5Pud+AZlCyumzSByuSCeYiCFDYDC4RxHVAYMwdhK0ltpTksQSSKplNpVKrlGZ3Motfins0dUYmadtGbwj1LUDubz7fQwPgICQmCtWPgvajMjs-Qh5Yrle91BqtVZTI4SO4WppjuoQ8SU-92RmbVnITNuIsKAtWKX0lKK5iq1ca286+r+Jq7lV6gq3o5LAdjPpPL2LSQqKswNaRmMJoNprMFksz1OfbPZfcSa5rCSXnplIbG7SNH0BkHmMWlDxCX5zTTE8zwvW1wWzQVhTAUUEXBJ8ZwxV8qiuVRXGOTwmXcXDTH-RpW34Uw6k0BoSWeIIINZaDTzWOCh35fAkJFMVEQw8ssMURBq1MJUl1VetV0bcwFRpWkgwMXRf2JTQj2Y2DgTQvloVheFXXdaU+PRGVBJwjtWwefRiNJEktR1PClTMXQDDOHUPFNRioIBFjzw0+CtNzfNC2LQzfTnAIcVqByvj0G5fy1MxND1ZsGhOB41DUVSvPUzM7WHRIxwnEKXxM5tyNOAJKKuN5dG8f8LFbWoPGsj4GM6VMAXy8cpkYFh2BILrJw2b1MOM3ITS1Gq8IJSxHB3ZyripVRggg-AKAgOB5CYyJJX40bEAAWk0Wy8NXTwzvOi6Q0y3pojoHajMrRTG3xEhajcbRCV8XRzCWjz2v7TlgXu0LsNJLUTRk8MaJpS5FPaP6+3TQHhlGcZ0EmVhgeK3IrAMf9rBIPwrFUN51WUKjrqRtjcqgLGBNyLxEosM6nLOElPH8NdKibFwOw58wbjpJzfraxGYNYoHht2ytnMSyLnOiul5OjHdWwOCwDGeZxHFpSnxZ8lGr3Rm86b2hBqtemiFauJW4vXKxNBbbFCQ7NmFMcPXvOphDIVNysyl0PUWkMB53BEuqCl-KGdxo6xWsg-7SE6ic-bncTA8dsmiVVOo3jqwP1CKGjIxJhjgiAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgBsB7AIyoE8BiWAF3QCcmSp1UwBtABgC6iUAAcKsXE1wV8IkAA9EAJgCs-EgDYAHABZtAdn6bNARgOnT-VQBoQtFQGZlJU9u2OAnOtW7HBgwBfQLs0LDxCUkoaBmY2Di4eXlNhJBBxSWlZeSUENQ0dfSMTc0trOwcENxdHTWVPU1UDbW9jWuDQjBwCYhJWSCYwbhJYUVoMZjBWeihcADcwEkwyAFc+IXkMqRk5NNzlfxIDR1VNfV9lfg9NW3tET20XVUc9bUs-A08rjpAw7si+gMhqhOGtYJJ8FBGCsqKgpKC4LABKkxBJttk9oh-NoSG9-KZHCdvAZThV7qYXLorvxlMoPAZNFdVD8-hFev0IINhlAwRCoQRMBRWP1MAlecjNmisrtQLlGTjTJ5mpZTLp1JdHGSEJ4ziQ2s5Pud+AZlCyumzSByuSCeYiCFDYDC4RxHVAYMwdhK0ltpTksYySKo6apVcozO5lFrtHVA80dUZLtpTtozeEepagdzefb6GB8BASEwVqx8F7UZkdn6EPLXEq3u91fxNXcqvwCbj3PGTkzPLpU-92ZmbdnITNuIsKAtWGX0lLK5jq1da8qGzSm1qKQ9cQTLAdjPpPP2LSQqKswNaRmMJoNprMFkszzOffPZfc1a5rGqXnplIaN-wqRIfQznqbRjAAw8Ql+c10xPM8L1tcEc36BZ0DIJY2AgJ85wxV8qnqTRcVOLxqk0L4kw3VUFTAh4WhpRVdCCKDWVg081gQkcoRQoZ0MwTDkhRWcK1wxREEsLdDAJTxlFMRklWUXQNy8DQQ10RiQ1pRxTCPVj4OBBEkNHR1YXhV13WlbDhJlUTW00AxcQefR3GsXtbkqHVVBIJUzEYs4dQ8U1mJggE2PPfTEL5XN80LYtSw2b0cOs3IAk8Eham88jdBuX8tTMQi2xIolHiDZkgrTEK9KzO1R0SCcp0s9EkrErTPNOAI2yuN5dG8f8LFxWoPFUXsPiYzpyt6WrJymRgWHYEgpuneLy0aqsTS1brPMZSxCXMeUKVKqD8AoCA4HkFjIklKyqwAWk0LVe1xOoGmaG4jCy0boPGqJqDoS6VoXXRIxbNxCNqNwwM-XRzFKsaBwzTlgT+30FyGrUTRxY0vgOAlaTOPsyrhwEEeGUZxnQSZWCRl8bKsAx-2sICtOsN4aRkzQdIBK1ws4qmRNyLxCIsTxewZNShv8ZtKisCktE+LSGV8M4SQ53pQutXmmoQBlQbIhlMuyumWw8UwgIZTdo2cQGYc+wm1f00nrymDWqy6tLdbIq4sqDQ2pbaNLPn4YxRcYvwVdIO2qsMqBnYXMpdD1FpDFot5PF6gpfzDTQtI9pow84ccFpjvDVV8LRHFZ-gGiyulTF6+P1CKMiI1UQxgmCIA */
     predictableActionArguments: true,
     initial: 'lobby',
     context: {
@@ -26,7 +26,6 @@ export const gameMachine = createMachine({
     },
     states: {
         lobby: {
-            entry: ['resetGame'],
             on: {
                 'start.game': [{
                     target: "redteam",
@@ -47,8 +46,10 @@ export const gameMachine = createMachine({
                 },
                 "guessing": {
                     on: {
-                        'submit.guess': {
-                            actions: (context, event) => { console.log(context, event) },
+                        'reveal.card': {
+                            // @ts-ignore
+                            actions: (context, event) => { context.cards[event.value].revealed = true;} ,
+                            target: 'guessing',
                         },
                         'incorrect.guess': '#(machine).blueteam',
                         'submit.suggestion': 'guessing',
@@ -73,8 +74,11 @@ export const gameMachine = createMachine({
 
                 guessing: {
                     on: {
-                        'correct.guess': 'guessing',
-                        'incorrect.guess': '#(machine).redteam',
+                        'reveal.card': {
+                            // @ts-ignore
+                            actions: (context, event) => { context.cards[event.value].revealed = true;} ,
+                            target: 'guessing',
+                        },
                         'submit.suggestion': 'guessing',
                         'end.turn': "#(machine).redteam",
                         'game.over': '#(machine).gameover'
@@ -103,6 +107,9 @@ export const gameMachine = createMachine({
         },
         resetTurn: (context, event) => {
             context.clue = '';
+        },
+        revealCard: (context, event) => {
+            context.clue = 'test'
         }
     },
     guards: {
@@ -110,5 +117,8 @@ export const gameMachine = createMachine({
             console.log(context.redteamCardsRemaining, context.blueteamCardsRemaining)
             return context.redteamCardsRemaining > context.blueteamCardsRemaining;
         },
+        continueTurn: (context) => {
+            return true;
+        }
     }
 });

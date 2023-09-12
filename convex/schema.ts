@@ -16,6 +16,11 @@ export default defineSchema({
     category: v.string(),
     word: v.string(),
   }),
+  rooms: defineTable({
+    id: v.string(),
+    teams: v.array(v.array(v.string())),
+    spymasters: v.array(v.string()),
+  }),
   gameflow: defineTable({
     state: v.string(),
     machine: v.string(),
