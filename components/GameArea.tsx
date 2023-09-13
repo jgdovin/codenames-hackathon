@@ -12,6 +12,17 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import GameRules from "./GameRules";
 
+const wrapper = (children: any, state: any, room: string) => {
+  return (
+    <>
+      <TeamCard state={state} color="red" room={room} />
+      <div className="w-full flex flex-col">{children}</div>
+      <TeamCard state={state} color="blue" room={room} />
+    </>
+  );
+};
+
+
 const GameArea = ({ room }: { room: string }) => {
   const createGame = (force = false) => {
     fetch(`/api/gameflow/`, {
@@ -20,44 +31,24 @@ const GameArea = ({ room }: { room: string }) => {
     });
   };
 
-  const wrapper = (children: any) => {
-    return (
-      <>
-        <div className="flex w-80 h-screen bg-red-700 place-content-center place-items-center">
-          <TeamCard state={state} color="red" room={room} />
-        </div>
-        <div className="w-full flex flex-col">{children}</div>
-
-        <div className="flex flex-col w-80 h-screen bg-red-700 place-content-center place-items-center">
-          <div className="absolute top-4 right-4 flex gap-4 place-content-center place-items-center"></div>
-          <TeamCard state={state} color="blue" room={room} />
-        </div>
-      </>
-    );
-  };
-
-  const startGame = () => {
-    sendAction({ action: "start.game", room });
-  };
-  
-  const { nickname, userId } = GetUserInfo();
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
   if (!latestStateFromDB) {
     createGame();
-    return <div>Creating Game</div>;
+    return <div className='w-full h-screen flex justify-center'><div className='h-8 my-auto'>Preparing Game...</div></div>;
   }
 
   const state = State.create(
     JSON.parse(latestStateFromDB?.state)
   ) as State<GameContext>;
 
+  
   const child = (
     <>
       <div className="bg-slate-600 h-full">
         <button onClick={() => createGame(true)}>Reset State</button>
         {state.matches("lobby") ? (
-          <button onClick={startGame}>Start Game</button>
+          <button onClick={() => sendAction({ action: "start.game", room })}>Start Game</button>
         ) : null}
       </div>
       {state.matches("lobby") ? (
@@ -75,7 +66,7 @@ const GameArea = ({ room }: { room: string }) => {
       </div>
     </>
   );
-  return wrapper(child);
+  return wrapper(child, state, room);
 };
 
 export default GameArea;
