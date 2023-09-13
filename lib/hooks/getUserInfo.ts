@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-export const getUserInfo = () => {
+export const GetUserInfo = () => {
   const [nickname, setNickname] = React.useState("");
   const [userId, setUserId] = React.useState("");
 

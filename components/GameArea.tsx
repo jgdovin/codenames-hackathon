@@ -6,7 +6,7 @@ import { State } from "xstate";
 
 import { sendAction } from "@/lib/state/gameMachineUtil";
 import { GameContext } from "@/lib/state/gameMachine";
-import { getUserInfo } from "@/lib/hooks/getUserInfo";
+import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -36,7 +36,7 @@ const GameArea = ({ room }: { room: string }) => {
     );
   };
 
-  const { nickname, userId } = getUserInfo();
+  const { nickname, userId } = GetUserInfo();
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
   if (!latestStateFromDB)

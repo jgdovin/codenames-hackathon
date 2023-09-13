@@ -2,11 +2,11 @@
 //text-red-800 text-blue-800
 import { useState } from "react";
 import { sendAction } from "@/lib/state/gameMachineUtil";
-import { getUserInfo } from "@/lib/hooks/getUserInfo";
+import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 const TeamCard = ({color, state, room}: {color: string, state: any, room: string}) => {
   const [clue, setClue] = useState('');
-  const { nickname, userId } = getUserInfo();
+  const { nickname, userId } = GetUserInfo();
   const capitalize = (text: string) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }  

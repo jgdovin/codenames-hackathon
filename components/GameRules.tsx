@@ -5,8 +5,8 @@ const GameRules = () => {
 
       <h2 className="text-xs font-semibold mb-1">Objective</h2>
       <p className="mb-3">
-        The goal of Codenames is to find all your team's agents before
-        the other team does while avoiding the opposing team's agents and the
+        The goal of Codenames is to find all your team&apos;s agents before
+        the other team does while avoiding the opposing team&apos;s agents and the
         assassin.
       </p>
 
@@ -32,7 +32,7 @@ const GameRules = () => {
       <h2 className="text-xs font-semibold mb-1">Gameplay</h2>
       <p className="mb-3">
         1. The Spymasters take turns providing one-word clues and a number to
-        their team. The clue should relate to one or more of their team's agents
+        their team. The clue should relate to one or more of their team&apos;s agents
         on the board.
         <br />
         2. The team then tries to guess the words on the board that match the
@@ -40,11 +40,11 @@ const GameRules = () => {
         guesses given by the Spymaster, plus one additional guess.
         <br />
         3. Click on a word on the board to make a guess. If the word is
-        an agent for your team, it's covered with your team's color (red or
+        an agent for your team, it&apos;s covered with your team&apos;s color (red or
         blue).
         <br />
         4. If the team guesses a word belonging to the opposing team, that word
-        is covered with the opposing team's color instead, and their turn ends.
+        is covered with the opposing team&apos;s color instead, and their turn ends.
         <br />
         5. If the team guesses the assassin word, they lose the game
         immediately.
@@ -56,7 +56,7 @@ const GameRules = () => {
       <h2 className="text-xs font-semibold mb-1">Winning</h2>
       <p className="mb-3">
         The first team to correctly identify all of their agents on the digital
-        board wins the game. Be cautious not to guess the opposing team's agents
+        board wins the game. Be cautious not to guess the opposing team&apos;s agents
         or the assassin, or your team may lose!
       </p>
 
