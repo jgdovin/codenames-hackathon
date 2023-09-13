@@ -22,6 +22,7 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   const data = await request.json();
-  await client.mutation(api.gameflow.createGame, { room: data.room});
+  const existingState = await StateFromDb(data.room);
+  if (!existingState || data.force) await client.mutation(api.gameflow.createGame, { room: data.room});
   return new Response('ok', { status: 200 });
 }

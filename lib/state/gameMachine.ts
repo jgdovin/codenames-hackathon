@@ -46,6 +46,9 @@ export const gameMachine = createMachine(
       "join.team": {
         actions: "joinTeam",
       },
+      "join.spymaster": {
+        actions: "joinSpymaster",
+      },
     },
     states: {
       lobby: {
