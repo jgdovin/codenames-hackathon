@@ -1,9 +1,9 @@
 "use client";
-//text-red-800 text-blue-800 bg-blue-500 bg-red-500
+//text-red-800 text-blue-800 bg-blue-800 bg-red-800
 import { useState } from "react";
 import { sendAction } from "@/lib/state/gameMachineUtil";
 import { GetUserInfo } from "@/lib/hooks/getUserInfo";
-import { playerOnAnyTeam, playerOnCurrentTeamAndNoSpymaster } from "@/lib/user";
+import { playerOnAnyTeam, playerOnTeamAndNoSpymaster } from "@/lib/user";
 
 const TeamCard = ({
   color,
@@ -65,10 +65,10 @@ const TeamCard = ({
         </ul>
         <h1 className={`text-${color}-800 text-center mt-4`}>Spymaster</h1>
         {state.context.players[state.context[`${color}Spymaster`]]}
-        {playerOnCurrentTeamAndNoSpymaster(state, color, userId) ? (
+        {playerOnTeamAndNoSpymaster(state, color, userId) ? (
           <div className="text-center">
             <button
-              className={`bg-${color}-500 p-2 rounded-lg m-2 text-xs`}
+              className={`bg-${color}-800 p-2 rounded-lg m-2 text-xs`}
               onClick={() => {
                 joinSpymaster();
               }}

@@ -42,7 +42,6 @@ const GameArea = ({ room }: { room: string }) => {
     JSON.parse(latestStateFromDB?.state)
   ) as State<GameContext>;
 
-  
   const child = (
     <>
       <div className="bg-slate-600 h-full">
