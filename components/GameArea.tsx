@@ -36,16 +36,18 @@ const GameArea = ({ room }: { room: string }) => {
     );
   };
 
-  const { nickname, userId } = GetUserInfo();
-
-  const latestStateFromDB = useQuery(api.gameflow.get, { room });
-
-  if (!latestStateFromDB) createGame();
-
   const startGame = () => {
     sendAction({ action: "start.game", room });
   };
-  if (!latestStateFromDB) return null;
+  
+  const { nickname, userId } = GetUserInfo();
+
+  const latestStateFromDB = useQuery(api.gameflow.get, { room });
+  if (!latestStateFromDB) {
+    createGame();
+    return <div>Creating Game</div>;
+  }
+
   const state = State.create(
     JSON.parse(latestStateFromDB?.state)
   ) as State<GameContext>;
