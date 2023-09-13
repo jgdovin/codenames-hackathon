@@ -48,7 +48,7 @@ const TeamCard = ({
           {!state.matches("lobby") &&
             `(${state.context[`${color}teamCardsRemaining`]})`}
         </p>
-        <div className="border border-1 rounded-lg p-2">
+        <div className="border-1 rounded-lg p-2">
           <h1 className={`text-center`}>Operatives</h1>
           <hr />
           {!playerOnAnyTeam(state, userId) ? (
@@ -75,7 +75,7 @@ const TeamCard = ({
             })}
           </ul>
         </div>
-        <div className='border border-1 rounded-lg p-2'>
+        <div className='border-1 rounded-lg p-2'>
         <h1 className={`text-slate-300 text-center mt-4`}>Spymaster</h1>
         <hr />
         <p className='ml-4 text-xs my-2'>{state.context.players[state.context[`${color}Spymaster`]]}</p>
@@ -106,7 +106,7 @@ const TeamCard = ({
               <>
                 <input
                   type="text"
-                  className="bg-gray-200 appearance-none text-xs border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  className="bg-gray-200 appearance-none text-xs border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) => setClue(e.target.value)}
                 />
                 <button

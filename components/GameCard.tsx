@@ -60,7 +60,7 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
                 <BsPatchCheck onClick={() => revealCard(card, room, idx)} className='h-5 w-5 cursor-pointer' />
             </div> : null }
             {
-                card.revealed ? <div ref={ref} className={cn('absolute top-0 left-0 w-full h-24 rounded-lg transition-all duration-700 border border-black border-2', card.color)}><div className='flex justify-center items-center h-full'><GiSharpSmile className='w-10 h-10' /></div></div> : null
+                card.revealed ? <div ref={ref} className={cn('absolute top-0 left-0 w-full h-24 rounded-lg transition-all duration-700 border-black border-2', card.color)}><div className='flex justify-center items-center h-full'><GiSharpSmile className='w-10 h-10' /></div></div> : null
             }
             
             

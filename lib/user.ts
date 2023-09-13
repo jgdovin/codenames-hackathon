@@ -22,6 +22,8 @@ export const playerOnTeamAndNoSpymaster = (state: any, color: string, userId: st
 }
 
 export const activeTeamColor = (state: any) => {
+  if (!state.value) return '';
+  console.log(state.value)
   if (typeof state.value === 'string') {
     return state.value;
   }

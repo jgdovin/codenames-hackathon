@@ -5,10 +5,10 @@ import GameArea from '@/components/GameArea';
 
 export default async function Home({params} : { params: { room: string }}) {
   const { room } = params;
-
+  const { BASE_URL } = process.env;
   return (
     <main className="flex">
-      <GameArea room={room} />
+      <GameArea baseUrl={BASE_URL || ''} room={room} />
     </main>
   );
 }

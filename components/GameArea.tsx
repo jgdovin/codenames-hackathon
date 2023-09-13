@@ -1,4 +1,6 @@
 "use client";
+// border-red-700 border-blue-700 bg-red-950 bg-blue-950 border-red-900 border-blue-900
+
 import React, { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import TeamCard from "./TeamCard";
@@ -11,22 +13,34 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import GameRules from "./GameRules";
 import Modal from "./Modal";
+import { activeTeamColor, playerOnTeam } from "@/lib/user";
+import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 const wrapper = (children: any, state: any, room: string) => {
   return (
     <>
       <TeamCard state={state} color="red" room={room} />
+      {state?.matches("lobby") ? (
+        //TODO - only show this button if the user is the host
+        <button
+          className="absolute top-5 left-10 bg-slate-800 p-2 rounded border border-slate-600"
+          onClick={() => sendAction({ action: "start.game", room })}
+        >
+          Start Game
+        </button>
+      ) : null}
       <div className="w-full flex flex-col">{children}</div>
       <TeamCard state={state} color="blue" room={room} />
     </>
   );
 };
 
-const GameArea = ({ room, baseUrl }: { room: string, baseUrl: string }) => {
+const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
+  const { userId } = GetUserInfo();
   const [isOpen, setIsOpen] = useState(false);
 
   const createGame = (force = false) => {
-    console.log('in here?')
+    console.log("in here?");
     fetch(`/api/gameflow/`, {
       method: "PUT",
       body: JSON.stringify({ room, force }),
@@ -38,28 +52,45 @@ const GameArea = ({ room, baseUrl }: { room: string, baseUrl: string }) => {
       createGame();
     }, 1000);
     return () => clearTimeout(timer);
-  }, [isOpen, createGame])
-
+  }, [isOpen, createGame]);
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
   if (!latestStateFromDB) {
     createGame();
-    return <div className='w-full h-screen flex justify-center'><div className='h-8 my-auto'>Preparing Game...</div></div>;
+    return (
+      <div className="w-full h-screen flex justify-center">
+        <div className="h-8 my-auto">Preparing Game...</div>
+      </div>
+    );
   }
 
   const state = State.create(
     JSON.parse(latestStateFromDB?.state)
   ) as State<GameContext>;
+  const activeColor = activeTeamColor(state);
 
-  const child  = (
-    <div className='flex flex-col gap-4'>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>{state?.context.clue}</Modal>
-      <div className="bg-slate-600 h-24 w-5/6 max-w-2xl p-2 rounded mx-auto">
-        <button onClick={() => createGame(true)}>Reset State</button>
-        {state?.matches("lobby") ? (
-          <button onClick={() => sendAction({ action: "start.game", room })}>Start Game</button>
-        ) : null}
+  /* <button onClick={() => createGame(true)}>Reset State</button> */
+
+  const child = (
+    <div className="flex flex-col gap-4">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        {state?.context.clue}
+      </Modal>
+      <div className="flex justify-center items-center p-4 gap-4">
+      {
+      state?.context.clue ? 
+        <div
+          className={`bg-neutral text-slate-700 font-bold border-2 border-${activeColor}-700 rounded`}
+        >
+         <div className='h-10 p-2 px-4'>{state?.context.clue}</div>
+        </div> : null
+        }
+        {state?.context.clue && playerOnTeam(state, activeColor, userId) ?
+        <div className={`border-2 h-12 bg-${activeColor}-950 border-${activeColor}-900 p-2 px-4 rounded`}>
+          <button onClick={() => sendAction({action: 'end.guessing', room})}>End Guessing</button>
+        </div> : null }
       </div>
+
       {state?.matches("lobby") ? (
         <GameRules />
       ) : (
@@ -71,7 +102,6 @@ const GameArea = ({ room, baseUrl }: { room: string, baseUrl: string }) => {
       )}
       <div className="bg-slate-600 h-24 w-5/6 max-w-2xl mx-auto p-2 rounded">
         <div>Game Log</div>
-        <div>{state?.context.clue}</div>
       </div>
     </div>
   );
