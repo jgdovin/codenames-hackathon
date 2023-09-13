@@ -40,9 +40,7 @@ const GameArea = ({ room }: { room: string }) => {
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
 
-  useEffect(() => {
-    if (!latestStateFromDB) createGame();
-  }, [])
+  if (!latestStateFromDB) createGame();
 
   const startGame = () => {
     sendAction({ action: "start.game", room });
