@@ -37,7 +37,7 @@ const GameArea = ({ room }: { room: string }) => {
       createGame();
     }, 1000);
     return () => clearTimeout(timer);
-  }, [isOpen])
+  }, [isOpen, createGame])
 
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });

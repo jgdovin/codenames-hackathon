@@ -14,7 +14,6 @@ const TeamCard = ({
   state: any;
   room: string;
 }) => {
-  if (!state) return null;
 
   const [clue, setClue] = useState("");
   const { nickname, userId } = GetUserInfo();
@@ -31,6 +30,9 @@ const TeamCard = ({
   const joinSpymaster = () => {
     sendAction({ action: "join.spymaster", room, userInfo, payload: color });
   };
+
+  if (!state) return null;
+
   return (
     <div className="flex w-80 bg-slate-700 h-screen place-content-center place-items-center text-slate-100">
       <div className={`w-5/6 bg-${color}-900 h-96 p-4 rounded-xl`}>
