@@ -13,7 +13,7 @@ import { api } from "@/convex/_generated/api";
 import GameRules from "./GameRules";
 
 const GameArea = ({ room }: { room: string }) => {
-  const resetGameState = () => {
+  const createGame = () => {
     fetch(`/api/gameflow/`, {
       method: "PUT",
       body: JSON.stringify({ room: room }),
@@ -39,8 +39,7 @@ const GameArea = ({ room }: { room: string }) => {
   const { nickname, userId } = GetUserInfo();
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
-  if (!latestStateFromDB)
-    return <button onClick={() => resetGameState()}>Reset State</button>;
+  if (!latestStateFromDB) createGame();
 
   const startGame = () => {
     sendAction({ action: "start.game", room });
@@ -49,15 +48,6 @@ const GameArea = ({ room }: { room: string }) => {
   const state = State.create(
     JSON.parse(latestStateFromDB?.state)
   ) as State<GameContext>;
-
-  // if (!state.matches('lobby')) {
-  //   const child = (
-  //     <>
-  //       <div className='bg-slate-600 h-full'></div>
-  //     </>
-  //   )
-  //   return wrapper(child);
-  // }
 
   const child = (
     <>

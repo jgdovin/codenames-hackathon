@@ -21,7 +21,7 @@ const TeamCard = ({color, state, room}: {color: string, state: any, room: string
     return state.context[`${color}Spymaster`] === userId;
   }
 
-  const playerOnTeam = state.context[`${color}Team`].includes(userId);
+  const playerOnTeam = state?.context[`${color}Team`]?.includes(userId);
 
   return (
     <div className="w-5/6 bg-gray-500 h-96 pt-4 rounded-xl">
@@ -46,11 +46,10 @@ const TeamCard = ({color, state, room}: {color: string, state: any, room: string
             <p>{capitalTC} Team Turn</p>
             {
               state.matches(`${color}team.spymaster`) ?
-              isSpymaster() ?
               <>
                 <input type="text" className='text-black' onChange={(e) => setClue(e.target.value)} />
                 <button onClick={() => {sendAction({action: 'give.clue', room, payload: clue})}}>Give Clue</button> 
-              </> : <></>
+              </>
                :
               <div>
                 <button onClick={() => {}}>Submit Guess</button>  
