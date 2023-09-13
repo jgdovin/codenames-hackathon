@@ -62,7 +62,7 @@ const GameArea = ({ room }: { room: string }) => {
         <GameRules />
       ) : (
         <div className="grid grid-cols-5 bg-slate-500 place-items-center place-content-center gap-4 p-10">
-          {state.context.cards.map((card: any, idx: number) => (
+          {state.context.cards?.map((card: any, idx: number) => (
             <GameCard key={idx} idx={idx} card={card} room={room} />
           ))}
         </div>

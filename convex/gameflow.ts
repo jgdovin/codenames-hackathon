@@ -88,11 +88,16 @@ export const createGame = mutation({
 
     const gameWords = Array.from(shuffleAndSliceArray(shuffledWords));
 
-    const context = {
-      ...gameMachine.context,
+    const context = { 
       cards: gameWords,
       redteamCardsRemaining: redStartCards,
       blueteamCardsRemaining: 17-redStartCards,
+      clue: "",
+      players: {},
+      redTeam: [],
+      blueTeam: [],
+      redSpymaster: "",
+      blueSpymaster: "",
     }
     
     // @ts-ignore

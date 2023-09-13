@@ -44,7 +44,7 @@ const TeamCard = ({color, state, room}: {color: string, state: any, room: string
           { !playerOnAnyTeam() ? <div className='text-center'><button className={`bg-slate-800 p-2 rounded-lg m-2 text-xs`} onClick={() => {joinTeam()}}>Join as Operative</button></div> : <></> }
           <hr />
           <ul>
-            {state.context[`${color}Team`].map((member: any, idx: number) => {
+            {state.context[`${color}Team`]?.map((member: any, idx: number) => {
               return <li className='ml-4 text-xs my-2' key={idx}>{state.context.players[member]}</li>
             })}
           </ul>
