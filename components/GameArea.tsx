@@ -1,16 +1,16 @@
 "use client";
-import React, { use, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import TeamCard from "./TeamCard";
 import { State } from "xstate";
 
 import { sendAction } from "@/lib/state/gameMachineUtil";
 import { GameContext } from "@/lib/state/gameMachine";
-import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import GameRules from "./GameRules";
+import Modal from "./Modal";
 
 const wrapper = (children: any, state: any, room: string) => {
   return (
@@ -22,14 +22,22 @@ const wrapper = (children: any, state: any, room: string) => {
   );
 };
 
-
 const GameArea = ({ room }: { room: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const createGame = (force = false) => {
     fetch(`/api/gameflow/`, {
       method: "PUT",
       body: JSON.stringify({ room, force }),
     });
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      createGame();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [isOpen])
 
 
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
@@ -42,26 +50,27 @@ const GameArea = ({ room }: { room: string }) => {
     JSON.parse(latestStateFromDB?.state)
   ) as State<GameContext>;
 
-  const child = (
+  const child  = (
     <>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>{state?.context.clue}</Modal>
       <div className="bg-slate-600 h-full">
         <button onClick={() => createGame(true)}>Reset State</button>
-        {state.matches("lobby") ? (
+        {state?.matches("lobby") ? (
           <button onClick={() => sendAction({ action: "start.game", room })}>Start Game</button>
         ) : null}
       </div>
-      {state.matches("lobby") ? (
+      {state?.matches("lobby") ? (
         <GameRules />
       ) : (
         <div className="grid grid-cols-5 bg-slate-500 place-items-center place-content-center gap-4 p-10">
-          {state.context.cards?.map((card: any, idx: number) => (
+          {state?.context.cards?.map((card: any, idx: number) => (
             <GameCard key={idx} idx={idx} card={card} room={room} />
           ))}
         </div>
       )}
       <div className="bg-slate-600 h-full">
         <div>Game Log</div>
-        <div>{state.context.clue}</div>
+        <div>{state?.context.clue}</div>
       </div>
     </>
   );

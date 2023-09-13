@@ -1,7 +1,7 @@
 export const isAnySpymaster = (state: any, userId: string) => {
-  return isSpymaster(state, 'red', userId) || isSpymaster(state, 'blue', userId);
+  return playerIsSpymaster(state, 'red', userId) || playerIsSpymaster(state, 'blue', userId);
 }
-export const isSpymaster = (state: any, color: string, userId: string) => {
+export const playerIsSpymaster = (state: any, color: string, userId: string) => {
   return state.context[`${color}Spymaster`] === userId;
 }
 
