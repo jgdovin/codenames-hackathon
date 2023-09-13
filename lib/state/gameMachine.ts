@@ -39,6 +39,8 @@ export const gameMachine = createMachine(
       players: {},
       redTeam: [],
       blueTeam: [],
+      redSpymaster: "",
+      blueSpymaster: "",
     },
     on: {
       "join.team": {
