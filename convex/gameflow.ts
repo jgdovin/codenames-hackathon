@@ -100,7 +100,6 @@ export const createGame = mutation({
       blueSpymaster: "",
     }
     
-    // @ts-ignore
     const machine = gameMachine.withContext(context)
 
     const existing = await ctx.db

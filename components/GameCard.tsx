@@ -10,6 +10,7 @@ import { GetUserInfo } from '@/lib/hooks/getUserInfo';
 import { api } from '@/convex/_generated/api';
 import { useQuery } from 'convex/react';
 import { State } from 'xstate';
+import { useEffect, useRef } from 'react';
 
 const revealCard = (card: any, room: string, idx: number) => {
     sendAction({action: 'reveal.card', room, payload: `${idx}`})
@@ -18,7 +19,13 @@ const revealCard = (card: any, room: string, idx: number) => {
 
 const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: string }) => {
     const { userId } = GetUserInfo();
-
+    const ref = useRef(null);
+    useEffect(() => {
+        setTimeout(() => {
+            // @ts-ignore
+            ref.current?.classList.add('group-hover:warped')
+        }, 1500)
+    }, [card.revealed])
     const latestStateFromDB = useQuery(api.gameflow.get, { room });
     if (!latestStateFromDB) return null;
     const state = State.create(
@@ -39,7 +46,7 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
         >
             <p className="text-xl font-bold">{card.word}</p>
             {
-                card.revealed ? <div className={cn('absolute top-0 left-0 w-full h-24 rounded-lg group-hover:warped transition-all duration-700 border border-black border-2', card.color)}><div className='flex justify-center items-center h-full'><GiSharpSmile className='w-10 h-10' /></div></div> : null
+                card.revealed ? <div ref={ref} className={cn('absolute top-0 left-0 w-full h-24 rounded-lg transition-all duration-700 border border-black border-2', card.color)}><div className='flex justify-center items-center h-full'><GiSharpSmile className='w-10 h-10' /></div></div> : null
             }
             
             

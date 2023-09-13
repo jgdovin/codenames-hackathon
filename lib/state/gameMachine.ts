@@ -7,8 +7,15 @@ export interface GameCard {
   color: string;
 }
 
+interface Card {
+  revealed: boolean;
+  word: string;
+  color: string;
+  team: string;
+}
+
 export interface GameContext {
-  cards: never[];
+  cards: Card[];
   clue: string;
   redteamCardsRemaining: number;
   blueteamCardsRemaining: number;
@@ -131,8 +138,12 @@ export const gameMachine = createMachine(
         context.clue = "";
       },
       revealCard: (context, event) => {
-        console.log(context)
-        // @ts-ignore
+        const teamColor = context.cards[event.payload].team;
+        if (context.cards[event.payload].revealed) return;
+        const teamDesignation = `${teamColor}teamCardsRemaining` as 'redteamCardsRemaining' | 'blueteamCardsRemaining';
+        if (context[teamDesignation] && context[teamDesignation] > 0) {
+          context[teamDesignation] -= 1;
+        }
         context.cards[event.payload].revealed = true;
       },
       joinTeam: (context, event) => {
