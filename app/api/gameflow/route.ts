@@ -11,10 +11,10 @@ export async function POST(request: Request) {
   const oldStateFromDb = await StateFromDb(data.room);
   const previousState = State.create(JSON.parse(oldStateFromDb.state)) as State<GameContext>;
   const service = interpret(gameMachine).start(previousState);
-  service.send({ type: data.action, value: data.value, room: data.room });
+
+  service.send({ type: data.action, payload: data.payload, room: data.room, user: data.user });
   const newState = service.getSnapshot()
-  // const newState = gameMachine.transition(gameMachine.resolveState(JSON.parse(workflowData.state)), {type: data.action, value: data.value});
-  // console.log(newState.value)
+
   client.mutation(api.gameflow.post, { room: data.room, state: JSON.stringify(newState) });
 
   return new Response('ok', { status: 200 });

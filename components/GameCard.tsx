@@ -1,9 +1,11 @@
+'use client';
+
 import { cn } from '@/lib/util/cn'
 import { GameCard } from '@/lib/state/gameMachine'
 import { sendAction } from "@/lib/state/gameMachineUtil";
 
 const revealCard = (card: any, room: string, idx: number) => {
-    sendAction('reveal.card', room, `${idx}`)
+    sendAction({action: 'reveal.card', room, payload: `${idx}`})
 }
 
 const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: string }) => {
