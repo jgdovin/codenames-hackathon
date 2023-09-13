@@ -31,3 +31,7 @@ export const activeTeamColor = (state: any) => {
 export const playerOnActiveTeam = (state: any, userId: string) => {
   return playerOnTeam(state, activeTeamColor(state), userId);
 }
+
+export const teamIsGuessing = (state: any) => {
+  return Object.values(state.value).includes('guessing');
+}
