@@ -52,7 +52,7 @@ const GameArea = ({ room }: { room: string }) => {
   const child = (
     <>
       <div className="bg-slate-600 h-full">
-        <button onClick={() => resetGameState()}>Reset State</button>
+        <button onClick={() => createGame()}>Reset State</button>
         {state.matches("lobby") ? (
           <button onClick={startGame}>Start Game</button>
         ) : null}
