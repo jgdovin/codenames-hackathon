@@ -32,7 +32,7 @@ const Page = () => {
     <div>
     <div className='w-screen h-screen flex flex-col gap-4 items-center justify-center'>
         <div className='bg-slate-700 w-96 h-36 rounded-xl flex flex-col justify-center items-center gap-6'>
-            { isEditing || !nickname ? <div><input type="text" placeholder='set your nickname' defaultValue={nickname} className='text-black' ref={ref} /> <button onClick={() => updateNickname()}>Send</button></div> : 
+            { isEditing || !nickname ? <div><input type="text" placeholder='set your nickname' defaultValue={nickname} className='text-black' ref={ref} /> <button onClick={() => updateNickname()}>Set Nickname</button></div> : 
             <div><span className='mr-4'>{nickname}</span> <button onClick={() => setIsEditing(true)}>Edit</button></div> }
             { nickname ? <div className='text-white'><button className='bg-blue-500 hover:bg-blue-700 text-slate-100 font-bold py-2 px-4 rounded' onClick={() => window.location.href = '/game/main'}>Join Game</button></div> : null }
         </div>
