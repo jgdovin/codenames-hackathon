@@ -40,7 +40,7 @@ const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const createGame = (force = false) => {
-    console.log("in here?");
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     fetch(`/api/gameflow/`, {
       method: "PUT",
       body: JSON.stringify({ room, force }),

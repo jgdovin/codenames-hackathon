@@ -9,6 +9,7 @@ export const StateFromDb = async (room: string) => {
 }
 
 export const sendAction = ({action, room, userInfo, payload}: {action: string, room: string, userInfo?: object, payload?: string}) => {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const user = JSON.stringify(userInfo || '{}');
-  fetch(`/api/gameflow/`, { method: 'POST', body: JSON.stringify({ room, action, payload, user}) })
+  fetch(`${BASE_URL}/api/gameflow/`, { method: 'POST', body: JSON.stringify({ room, action, payload, user}) })
 }
