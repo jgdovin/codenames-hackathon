@@ -47,13 +47,6 @@ const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
     });
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      createGame();
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [isOpen, createGame]);
-
   const latestStateFromDB = useQuery(api.gameflow.get, { room });
   if (!latestStateFromDB) {
     createGame();
