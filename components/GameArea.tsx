@@ -41,10 +41,11 @@ const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
 
   const createGame = (force = false) => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    fetch(`/api/gameflow/`, {
-      method: "PUT",
-      body: JSON.stringify({ room, force }),
-    });
+    console.log(BASE_URL)
+    // fetch(`/api/gameflow/`, {
+    //   method: "PUT",
+    //   body: JSON.stringify({ room, force }),
+    // });
   };
 
   useEffect(() => {
