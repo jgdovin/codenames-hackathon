@@ -122,7 +122,7 @@ const GameArea = ({ room }: { room: string; }) => {
         </div>
       )}
       <div className="bg-slate-600 h-24 w-5/6 max-w-2xl mx-auto p-2 rounded">
-        <div>Game Log</div>
+        {/* <div>Game Log</div> */}
       </div>
     </div>
   );
