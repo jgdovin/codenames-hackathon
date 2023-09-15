@@ -24,7 +24,7 @@ const SpymasterClue = ({
   const activeColor = activeTeamColor(state);
   
   const clueCountOptions = Array.from({length: 10}, (_, i) => i).map((count) => {
-    return <li onClick={() => { setIsOpen(false); setClueCount(`${count}`)}} className='cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground'>{count}</li>
+    return <li onClick={() => { setIsOpen(false); setClueCount(`${count}`)}} key={count} className='cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground'>{count}</li>
   })
 
   return (
