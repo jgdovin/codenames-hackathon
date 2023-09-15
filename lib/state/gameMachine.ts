@@ -17,6 +17,7 @@ interface Card {
 export interface GameContext {
   cards: Card[];
   clue: string;
+  clueCount: string;
   redteamCardsRemaining: number;
   blueteamCardsRemaining: number;
   players: { [userId: string]: string };
@@ -41,6 +42,7 @@ export const gameMachine = createMachine(
     context: {
       cards: [],
       clue: "",
+      clueCount: '0',
       redteamCardsRemaining: 0,
       blueteamCardsRemaining: 0,
       players: {},
@@ -131,10 +133,12 @@ export const gameMachine = createMachine(
   {
     actions: {
       submitClue: (context, event) => {
-        console.log(event)
-        context.clue = event.payload;
+        const { clueCount, clue } = JSON.parse(event.payload);
+        context.clueCount = clueCount;
+        context.clue = clue;
       },
       resetTurn: (context, event) => {
+        context.clueCount = '0';
         context.clue = "";
       },
       revealCard: (context, event) => {

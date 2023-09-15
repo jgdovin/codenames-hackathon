@@ -9,11 +9,13 @@ import { State } from "xstate";
 import { sendAction } from "@/lib/state/gameMachineUtil";
 import { GameContext } from "@/lib/state/gameMachine";
 
+import SpymasterClue from "@/components/SpymasterClue";
+
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import GameRules from "./GameRules";
 import Modal from "./Modal";
-import { activeTeamColor, playerOnTeam } from "@/lib/user";
+import { activeTeamColor, playerIsOnTeam } from "@/lib/user";
 import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 const wrapper = (children: any, state: any, room: string) => {
@@ -37,10 +39,12 @@ const wrapper = (children: any, state: any, room: string) => {
 
 const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
   const { userId } = GetUserInfo();
+  const [clue, setClue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const createGame = (force = false) => {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const BASE_URL =
+      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     fetch(`${BASE_URL}/api/gameflow/`, {
       method: "PUT",
       body: JSON.stringify({ room, force }),
@@ -70,18 +74,35 @@ const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
         {state?.context.clue}
       </Modal>
       <div className="flex justify-center items-center p-4 gap-4">
-      {
-      state?.context.clue ? 
-        <div
-          className={`bg-neutral text-slate-700 font-bold border-2 border-${activeColor}-700 rounded`}
-        >
-         <div className='h-10 p-2 px-4'>{state?.context.clue}</div>
-        </div> : null
-        }
-        {state?.context.clue && playerOnTeam(state, activeColor, userId) ?
-        <div className={`border-2 h-12 bg-${activeColor}-950 border-${activeColor}-900 p-2 px-4 rounded`}>
-          <button onClick={() => sendAction({action: 'end.guessing', room})}>End Guessing</button>
-        </div> : null }
+        {state?.matches(`${activeColor}team.spymaster`) && (
+          <SpymasterClue state={state} room={room} userId={userId} />
+        )}
+        {state?.context.clue ? (
+          <>
+            <div
+              className={`bg-neutral text-slate-700 font-bold border-2 border-${activeColor}-700 rounded`}
+            >
+              <div className="h-10 p-2 px-4">{state?.context.clue}</div>
+            </div>
+            <div
+              className={`bg-neutral text-slate-700 font-bold border-2 border-${activeColor}-700 rounded`}
+            >
+              <div className="h-10 p-2 px-4">{state?.context.clueCount}</div>
+            </div>
+          </>
+        ) : null}
+
+        {state?.context.clue && playerIsOnTeam(state, activeColor, userId) ? (
+          <div
+            className={`border-2 h-12 bg-${activeColor}-950 border-${activeColor}-900 p-2 px-4 rounded`}
+          >
+            <button
+              onClick={() => sendAction({ action: "end.guessing", room })}
+            >
+              End Guessing
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {state?.matches("lobby") ? (

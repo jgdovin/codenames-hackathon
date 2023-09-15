@@ -6,8 +6,8 @@ import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 import {
   activeTeamColor,
   playerIsSpymaster,
-  playerOnAnyTeam,
-  playerOnTeamAndNoSpymaster,
+  playerIsOnAnyTeam,
+  playerIsOnTeamAndNoSpymaster,
   teamIsGuessing,
 } from "@/lib/user";
 
@@ -20,7 +20,6 @@ const TeamCard = ({
   state: any;
   room: string;
 }) => {
-  const [clue, setClue] = useState("");
   const { nickname, userId } = GetUserInfo();
   const capitalize = (text: string) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -51,7 +50,7 @@ const TeamCard = ({
         <div className="border-1 rounded-lg p-2">
           <h1 className={`text-center`}>Operatives</h1>
           <hr />
-          {!playerOnAnyTeam(state, userId) ? (
+          {!playerIsOnAnyTeam(state, userId) ? (
             <div className="text-center">
               <button
                 className={`bg-slate-800 p-2 rounded-lg m-2 text-xs`}
@@ -79,7 +78,7 @@ const TeamCard = ({
         <h1 className={`text-slate-300 text-center mt-4`}>Spymaster</h1>
         <hr />
         <p className='ml-4 text-xs my-2'>{state.context.players[state.context[`${color}Spymaster`]]}</p>
-        {playerOnTeamAndNoSpymaster(state, color, userId) ? (
+        {playerIsOnTeamAndNoSpymaster(state, color, userId) ? (
           <div className="text-center">
             <button
               className={`bg-slate-800 p-2 m-2 text-xs border-gray-400 rounded shadow`}
@@ -94,32 +93,6 @@ const TeamCard = ({
           <></>
         )}
         </div>
-
-        {state.matches(`${color}team`) ? (
-          <div>
-            <hr />
-            {activeTeamColor(state) === color ? (
-              <p>{capitalTC} Team Turn</p>
-            ) : null}
-            {playerIsSpymaster(state, color, userId) &&
-            state.matches(`${color}team.spymaster`) ? (
-              <>
-                <input
-                  type="text"
-                  className="bg-gray-200 appearance-none text-xs border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white"
-                  onChange={(e) => setClue(e.target.value)}
-                />
-                <button
-                  onClick={() => {
-                    sendAction({ action: "give.clue", room, payload: clue });
-                  }}
-                >
-                  Give Clue
-                </button>
-              </>
-            ) : null}
-          </div>
-        ) : null}
       </div>
     </div>
   );

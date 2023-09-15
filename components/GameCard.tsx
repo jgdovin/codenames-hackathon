@@ -4,7 +4,7 @@ import { GiSharpSmile } from 'react-icons/gi'
 import { BsPatchQuestion, BsPatchCheck } from 'react-icons/bs'
 
 import { cn } from '@/lib/util/cn'
-import { isAnySpymaster, playerOnActiveTeam } from '@/lib/user';
+import { playerIsAnySpymaster, playerIsOnActiveTeam } from '@/lib/user';
 import { GameCard, GameContext } from '@/lib/state/gameMachine'
 import { sendAction } from "@/lib/state/gameMachineUtil";
 import { GetUserInfo } from '@/lib/hooks/getUserInfo';
@@ -34,12 +34,12 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
       JSON.parse(latestStateFromDB?.state)
     ) as State<GameContext>;
 
-    const cardColor = isAnySpymaster(state, userId) ? card.color : 'bg-neutral'
-    const textColor = card.revealed || isAnySpymaster(state, userId) ? 'text-gray-100' : 'text-gray-700'
+    const cardColor = playerIsAnySpymaster(state, userId) ? card.color : 'bg-neutral'
+    const textColor = card.revealed || playerIsAnySpymaster(state, userId) ? 'text-gray-100' : 'text-gray-700'
 
     const guessing = () => {
         if (!Object.values(state.value).includes('guessing')) return false;
-        if (!playerOnActiveTeam(state, userId)) return false;
+        if (!playerIsOnActiveTeam(state, userId)) return false;
         return true;
       }
 
@@ -53,7 +53,7 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
             )}
         >
             <p className="text-xl font-bold">{card.word}</p>
-            { guessing() && playerOnActiveTeam(state, userId) ?
+            { guessing() && playerIsOnActiveTeam(state, userId) ?
             <div className='w-16 p-1 h-6 absolute top-0 right-0 flex justify-evenly'>
                 <BsPatchQuestion className='h-5 w-5' />
             
