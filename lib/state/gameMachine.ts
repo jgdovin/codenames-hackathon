@@ -5,6 +5,7 @@ export interface GameCard {
   team: "red" | "blue" | "neutral" | "black";
   revealed: boolean;
   color: string;
+  votes: Array<string>;
 }
 
 interface Card {
@@ -15,7 +16,7 @@ interface Card {
 }
 
 export interface GameContext {
-  cards: Card[];
+  cards: GameCard[];
   clue: string;
   clueCount: string;
   endTurn: boolean;
@@ -102,7 +103,14 @@ export const gameMachine = createMachine(
                 actions: 'revealCard',
                 target: "guessing",
               },
-              "submit.suggestion": "guessing",
+              "vote.card": {
+                actions: 'voteCard',
+                target: "guessing",
+              },
+              "unVote.card": {
+                actions: 'unVoteCard',
+                target: "guessing",
+              },
               "end.guessing": "#(machine).blueteam",
               "game.over": "#(machine).gameover",
             },
@@ -138,7 +146,14 @@ export const gameMachine = createMachine(
                 actions: 'revealCard',
                 target: "guessing",
               },
-              "submit.suggestion": "guessing",
+              "vote.card": {
+                actions: 'voteCard',
+                target: "guessing",
+              },
+              "unVote.card": {
+                actions: 'unVoteCard',
+                target: "guessing",
+              },
               "end.guessing": "#(machine).redteam",
               "game.over": "#(machine).gameover",
             },
@@ -164,6 +179,28 @@ export const gameMachine = createMachine(
       resetTurn: (context, event) => {
         context.clueCount = '0';
         context.clue = "";
+        context.cards = context.cards.map((card) => {
+          card.votes = [];
+          return card
+        })
+      },
+      voteCard: (context, event) => {
+        const { cardId, userId } = JSON.parse(event.payload);
+
+        const index = context.cards[cardId].votes.indexOf(userId);
+
+        if (index === -1) {
+          context.cards[cardId].votes.push(userId);
+        }
+      },
+      unVoteCard: (context, event) => {
+        const { cardId, userId } = JSON.parse(event.payload);
+
+        const index = context.cards[cardId].votes.indexOf(userId);
+
+        if (index !== -1) {
+          context.cards[cardId].votes.splice(index, 1);
+        }
       },
       revealCard: (context, event) => {
         const { activeColor, id } = JSON.parse(event.payload);
@@ -176,7 +213,7 @@ export const gameMachine = createMachine(
         if (context[teamDesignation] && context[teamDesignation] > 0) {
           context[teamDesignation] -= 1;
         }
-        console.log('after', context.cluesLeft)
+
         if (context.cluesLeft <= 0 || cardColor !== activeColor) context.endTurn = true;
         context.cards[id].revealed = true;
       },

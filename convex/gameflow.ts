@@ -82,6 +82,7 @@ export const createGame = mutation({
         return {
           revealed: false,
           word: word.word,
+          votes: [],
           ...getColorAndTeam(index, redStartCards)
       }
     });

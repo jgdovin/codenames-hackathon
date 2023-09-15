@@ -2,6 +2,7 @@
 
 import { GiSharpSmile } from 'react-icons/gi'
 import { BsPatchQuestion, BsPatchCheck } from 'react-icons/bs'
+import { MdOutlineThumbsUpDown, MdThumbsUpDown } from 'react-icons/md'
 
 import { cn } from '@/lib/util/cn'
 import { activeTeamColor, playerIsAnySpymaster, playerIsOnActiveTeam } from '@/lib/user';
@@ -13,14 +14,18 @@ import { useQuery } from 'convex/react';
 import { State } from 'xstate';
 import { useEffect, useRef } from 'react';
 
-
-
-
-
 const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: string }) => {
     const revealCard = (idx: number, activeColor: string) => {
         sendAction({action: 'reveal.card', room, payload: JSON.stringify({id: idx, activeColor})})
     }
+    const voteCard = (idx: number, userId: string, unvote = false) => {
+        if (unvote) {
+            sendAction({action: 'unVote.card', room, payload: JSON.stringify({cardId: idx, userId})})
+        } else {
+            sendAction({action: 'vote.card', room, payload: JSON.stringify({cardId: idx, userId})})
+        }
+    }
+
     const { userId } = GetUserInfo();
     const ref = useRef(null);
     useEffect(() => {
@@ -55,11 +60,18 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
         >
             <p className="text-xl font-bold">{card.word}</p>
             { guessing() && playerIsOnActiveTeam(state, userId) ?
+            <>
+            { card.votes.length ? <div className='w-8 h-6 bg-[#b99d78] absolute top-0 left-0 flex justify-evenly rounded-lg'>{card.votes.length}</div> : null}
+
             <div className='w-16 p-1 h-6 absolute top-0 right-0 flex justify-evenly'>
-                <BsPatchQuestion className='h-5 w-5' />
+                {
+                    card.votes.includes(userId) ? <MdThumbsUpDown onClick={() => voteCard(idx, userId, true)} className='h-5 w-5 cursor-pointer' /> : <MdOutlineThumbsUpDown onClick={() => voteCard(idx, userId)} className='h-5 w-5 cursor-pointer' />
+                }
             
                 <BsPatchCheck onClick={() => revealCard(idx, activeColor)} className='h-5 w-5 cursor-pointer' />
-            </div> : null }
+            </div> 
+            </>
+            : null }
             {
                 card.revealed ? <div ref={ref} className={cn('absolute top-0 left-0 w-full h-24 rounded-lg transition-all duration-700 border-black border-2', card.color)}><div className='flex justify-center items-center h-full'><GiSharpSmile className='w-10 h-10' /></div></div> : null
             }
