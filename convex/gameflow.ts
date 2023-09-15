@@ -93,6 +93,7 @@ export const createGame = mutation({
       redteamCardsRemaining: redStartCards,
       blueteamCardsRemaining: 17-redStartCards,
       clue: "",
+      clueCount: '0',
       players: {},
       redTeam: [],
       blueTeam: [],
