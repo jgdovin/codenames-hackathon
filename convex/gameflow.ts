@@ -99,6 +99,8 @@ export const createGame = mutation({
       blueTeam: [],
       redSpymaster: "",
       blueSpymaster: "",
+      endTurn: false,
+      cluesLeft: 0,
     }
     
     const machine = gameMachine.withContext(context)

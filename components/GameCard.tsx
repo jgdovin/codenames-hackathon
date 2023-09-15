@@ -4,7 +4,7 @@ import { GiSharpSmile } from 'react-icons/gi'
 import { BsPatchQuestion, BsPatchCheck } from 'react-icons/bs'
 
 import { cn } from '@/lib/util/cn'
-import { playerIsAnySpymaster, playerIsOnActiveTeam } from '@/lib/user';
+import { activeTeamColor, playerIsAnySpymaster, playerIsOnActiveTeam } from '@/lib/user';
 import { GameCard, GameContext } from '@/lib/state/gameMachine'
 import { sendAction } from "@/lib/state/gameMachineUtil";
 import { GetUserInfo } from '@/lib/hooks/getUserInfo';
@@ -14,12 +14,13 @@ import { State } from 'xstate';
 import { useEffect, useRef } from 'react';
 
 
-const revealCard = (card: any, room: string, idx: number) => {
-    sendAction({action: 'reveal.card', room, payload: `${idx}`})
-}
+
 
 
 const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: string }) => {
+    const revealCard = (idx: number, activeColor: string) => {
+        sendAction({action: 'reveal.card', room, payload: JSON.stringify({id: idx, activeColor})})
+    }
     const { userId } = GetUserInfo();
     const ref = useRef(null);
     useEffect(() => {
@@ -33,7 +34,7 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
     const state = State.create(
       JSON.parse(latestStateFromDB?.state)
     ) as State<GameContext>;
-
+    const activeColor = activeTeamColor(state);
     const cardColor = playerIsAnySpymaster(state, userId) ? card.color : 'bg-neutral'
     const textColor = card.revealed || playerIsAnySpymaster(state, userId) ? 'text-gray-100' : 'text-gray-700'
 
@@ -57,7 +58,7 @@ const GameCard = ({ card, idx, room }: { card: GameCard, idx: number, room: stri
             <div className='w-16 p-1 h-6 absolute top-0 right-0 flex justify-evenly'>
                 <BsPatchQuestion className='h-5 w-5' />
             
-                <BsPatchCheck onClick={() => revealCard(card, room, idx)} className='h-5 w-5 cursor-pointer' />
+                <BsPatchCheck onClick={() => revealCard(idx, activeColor)} className='h-5 w-5 cursor-pointer' />
             </div> : null }
             {
                 card.revealed ? <div ref={ref} className={cn('absolute top-0 left-0 w-full h-24 rounded-lg transition-all duration-700 border-black border-2', card.color)}><div className='flex justify-center items-center h-full'><GiSharpSmile className='w-10 h-10' /></div></div> : null

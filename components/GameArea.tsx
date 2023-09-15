@@ -68,6 +68,15 @@ const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
 
   /* <button onClick={() => createGame(true)}>Reset State</button> */
 
+  if (state?.matches('gameover')) {
+    return (
+      <div className="w-full h-screen flex flex-col justify-center">
+        <div className="h-8 mx-auto">Game Over</div>
+        <button className='bg-green-700 text-white p-4 rounded-xl w-48 mx-auto' onClick={() => createGame(true)}>Start New Game</button>
+      </div>
+    )
+  }
+
   const child = (
     <div className="flex flex-col gap-4">
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
