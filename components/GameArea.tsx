@@ -37,9 +37,8 @@ const wrapper = (children: any, state: any, room: string) => {
   );
 };
 
-const GameArea = ({ room, baseUrl }: { room: string; baseUrl: string }) => {
+const GameArea = ({ room }: { room: string; baseUrl: string }) => {
   const { userId } = GetUserInfo();
-  const [clue, setClue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const createGame = (force = false) => {
