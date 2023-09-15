@@ -1,7 +1,7 @@
 'use client';
 
 import { GiSharpSmile } from 'react-icons/gi'
-import { BsPatchQuestion, BsPatchCheck } from 'react-icons/bs'
+import {  BsPatchCheck } from 'react-icons/bs'
 import { MdOutlineThumbsUpDown, MdThumbsUpDown } from 'react-icons/md'
 
 import { cn } from '@/lib/util/cn'

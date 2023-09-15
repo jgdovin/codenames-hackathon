@@ -66,12 +66,6 @@ const GameArea = ({ room }: { room: string; }) => {
   const activeColor = activeTeamColor(state);
 
   /* <button onClick={() => createGame(true)}>Reset State</button> */
-   if (!state) {
-    <div className="w-full h-screen flex flex-col justify-center">
-    <div className="h-8 mx-auto">No Game</div>
-    <button className='bg-green-700 text-white p-4 rounded-xl w-48 mx-auto' onClick={() => createGame(true)}>Start New Game</button>
-  </div>
-   }
   if (state?.matches('gameover')) {
     return (
       <div className="w-full h-screen flex flex-col justify-center">
