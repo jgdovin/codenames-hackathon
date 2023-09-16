@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const data = await request.json();
   const words = data.words;
   words.forEach(async (word: { word: string, category: string}) => { 
-    client.mutation(api.words.insert, { word: word.word, category: word.category });
+    client.mutation(api.words.insert, { word: word.word, category: 'official' });
   })
   return new Response('ok', { status: 200 });
 }
