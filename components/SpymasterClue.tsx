@@ -41,8 +41,8 @@ const SpymasterClue = ({
   );
 
   return (
-    <>
-      {playerIsActiveSpymaster(state, userId) ? (
+    <div className='h-11'>
+      {playerIsActiveSpymaster(state, userId) && (
         <>
           <input
             type="text"
@@ -89,10 +89,8 @@ const SpymasterClue = ({
             Give Clue
           </button>
         </>
-      ) : (
-        <div>{activeColor} Team Spymaster is giving their clue.</div>
       )}
-    </>
+    </div>
   );
 };
 
