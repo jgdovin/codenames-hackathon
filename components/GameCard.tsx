@@ -69,10 +69,18 @@ const GameCard = ({
   const cardColor = playerIsAnySpymaster(state, userId)
     ? card.color
     : 'bg-neutral';
-  const textColor =
-    (playerIsAnySpymaster(state, userId) && card.color !== 'bg-neutral') || (card.revealed && card.color !== 'bg-neutral')
-      ? 'text-slate-100'
-      : 'text-slate-800';
+    let textColor = 'text-slate-100';
+
+  const getTextColor = (cardColor: string) => {
+    switch(cardColor) {
+        case 'bg-blue-700' || 'bg-red-700' || 'bg-black':
+            return 'text-slate-100';
+        case 'bg-neutral':
+            return 'text-slate-800';
+        default:
+            return 'text-slate-100';
+    }
+  }
 
   const guessing = Object.values(state.value).includes('guessing');
 
@@ -81,7 +89,7 @@ const GameCard = ({
       <div
         className={cn(
           'w-full h-24 flex items-center justify-center rounded-lg border-2 border-black relative group',
-          textColor,
+          getTextColor(cardColor),
           cardColor
         )}
       >
@@ -93,7 +101,7 @@ const GameCard = ({
                 {card.votes.map((vote) => (
                   <div
                     key={vote}
-                    className='h-4 w-16 text-xs self-end overflow-hidden overflow-ellipsis pl-1 bg-[#b99d78] text-black font-bold border border-black rounded'
+                    className='h-4 w-16 text-xs self-end overflow-hidden overflow-ellipsis pl-1 bg-[#b99d78] text-black font-bold border-2 border-black rounded'
                   >
                     {state.context.players[vote]}
                   </div>
@@ -128,7 +136,8 @@ const GameCard = ({
           <div
             ref={ref}
             className={cn(
-              'absolute top-0 left-0 w-full h-24 rounded-lg transition-all duration-700 border-black border-2',
+              'coverCard absolute -top-0.5 left-0 w-full h-24 rounded transition-all duration-700 border border-black',
+              getTextColor(card.color),
               card.color
             )}
           >

@@ -35,6 +35,10 @@
     --radius: 0.5rem;
     --background-neutral-rgb: 210, 180, 140;
   }
+
+  .coverCard {
+    transform: perspective(10em)
+  }
  
   .dark {
     --background: 222.2 84% 4.9%;
