@@ -83,7 +83,7 @@ const GameCard = ({
           cardColor
         )}
       >
-        <p className='text-xl font-bold'>{card.word}</p>
+        <p className='text-xl font-bold overflow-hidden overflow-ellipsis border-slate-200/40 border bg-slate-100/20 text-slate-900 p-2 rounded'>{card.word}</p>
         {guessing ? (
           <>
             {card.votes.length || true ? (

@@ -38,8 +38,8 @@ const TeamCard = ({
   if (!state) return null;
 
   return (
-    <div className='flex flex-col w-80 bg-slate-700 pt-20 place-items-center text-slate-100'>
-      <div className='h-12 w-full text-center px-8 mb-4'>
+    <div className='flex flex-col w-64 bg-slate-700 pt-20 place-items-center text-slate-100'>
+      <div className='w-full text-center px-8 mb-4 min-h-[60px]'>
       {state.matches(`${color}team.guessing`) && (
           <h1 className='text-center'>
             {capitalTC} Team is Guessing

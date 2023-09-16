@@ -1,7 +1,7 @@
 "use client";
 // border-red-700 border-blue-700 bg-red-950 bg-blue-950 border-red-900 border-blue-900
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import GameCard from "./GameCard";
 import TeamCard from "./TeamCard";
 import { State } from "xstate";
@@ -20,7 +20,7 @@ import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 const wrapper = (children: any, state: any, room: string) => {
   return (
-    <>
+    <div className='flex w-full justify-center'>
       <TeamCard state={state} color="red" room={room} />
       {state?.matches("lobby") ? (
         //TODO - only show this button if the user is the host
@@ -31,9 +31,9 @@ const wrapper = (children: any, state: any, room: string) => {
           Start Game
         </button>
       ) : null}
-      <div className="w-full flex flex-col">{children}</div>
+      <div className="flex flex-col w-full max-w-7xl">{children}</div>
       <TeamCard state={state} color="blue" room={room} />
-    </>
+    </div>
   );
 };
 
@@ -115,7 +115,7 @@ const GameArea = ({ room }: { room: string; }) => {
       {state?.matches("lobby") ? (
         <GameRules />
       ) : (
-        <div className="grid grid-cols-5 bg-slate-500 place-items-center place-content-center gap-4 p-10 max-w-4xl w-full mx-auto">
+        <div className="grid grid-cols-5 bg-slate-600 rounded-xl place-items-center place-content-center gap-4 p-10 max-w-7xl w-full">
           {state?.context.cards?.map((card: any, idx: number) => (
             <GameCard key={idx} idx={idx} card={card} room={room} />
           ))}
