@@ -20,12 +20,12 @@ const TeamCard = ({
   state: any;
   room: string;
 }) => {
-  const { nickname, userId } = GetUserInfo();
+  const { userId } = GetUserInfo();
   const capitalize = (text: string) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
   const capitalTC = capitalize(color);
-  const userInfo = { nickname, userId };
+  const userInfo = GetUserInfo();
 
   const joinTeam = () => {
     sendAction({ action: 'join.team', room, userInfo, payload: color });

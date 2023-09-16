@@ -27,9 +27,11 @@ const GameCard = ({
   idx: number;
   room: string;
 }) => {
+    const userInfo = GetUserInfo();
   const revealCard = (idx: number, activeColor: string) => {
     sendAction({
       action: 'reveal.card',
+      userInfo,
       room,
       payload: JSON.stringify({ id: idx, activeColor }),
     });
@@ -50,7 +52,7 @@ const GameCard = ({
     }
   };
 
-  const { userId } = GetUserInfo();
+  const { userId } = userInfo;
   const ref = useRef(null);
   useEffect(() => {
     setTimeout(() => {
@@ -68,9 +70,9 @@ const GameCard = ({
     ? card.color
     : 'bg-neutral';
   const textColor =
-    card.revealed || playerIsAnySpymaster(state, userId)
-      ? 'text-gray-100'
-      : 'text-gray-700';
+    (playerIsAnySpymaster(state, userId) && card.color !== 'bg-neutral') || (card.revealed && card.color !== 'bg-neutral')
+      ? 'text-slate-100'
+      : 'text-slate-800';
 
   const guessing = Object.values(state.value).includes('guessing');
 
@@ -83,7 +85,7 @@ const GameCard = ({
           cardColor
         )}
       >
-        <p className='text-xl font-bold overflow-hidden overflow-ellipsis border-slate-200/40 border bg-slate-100/20 text-slate-900 p-2 rounded'>{card.word}</p>
+        <p className='text-xl font-bold overflow-hidden overflow-ellipsis p-2 rounded'>{card.word}</p>
         {guessing ? (
           <>
             {card.votes.length || true ? (

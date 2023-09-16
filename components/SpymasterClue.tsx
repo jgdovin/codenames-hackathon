@@ -7,21 +7,21 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { GetUserInfo } from "@/lib/hooks/getUserInfo";
 
 const SpymasterClue = ({
   state,
   room,
-  userId,
 }: {
   state: any;
   room: string;
-  userId: string;
 }) => {
   const [clue, setClue] = useState("");
   const [clueCount, setClueCount] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
 
-  const activeColor = activeTeamColor(state);
+  const userInfo = GetUserInfo();
+  const { userId } = userInfo;
 
   const clueCountOptions = Array.from({ length: 10 }, (_, i) => i).map(
     (count) => {
@@ -81,6 +81,7 @@ const SpymasterClue = ({
               sendAction({
                 action: "give.clue",
                 room,
+                userInfo,
                 payload: JSON.stringify({ clue, clueCount }),
               });
             }}

@@ -82,7 +82,7 @@ const GameArea = ({ room }: { room: string; }) => {
       </Modal>
       <div className="flex justify-center items-center p-4 gap-4">
         {state?.matches(`${activeColor}team.spymaster`) && (
-          <SpymasterClue state={state} room={room} userId={userId} />
+          <SpymasterClue state={state} room={room} />
         )}
         {state?.context.clue ? (
           <>
@@ -121,8 +121,14 @@ const GameArea = ({ room }: { room: string; }) => {
           ))}
         </div>
       )}
-      <div className="bg-slate-600 h-24 w-5/6 max-w-2xl mx-auto p-2 rounded">
-        {/* <div>Game Log</div> */}
+      <div className="bg-slate-600 h-24 w-5/6 max-w-2xl mx-auto p-2 rounded overflow-auto">
+        <ul>
+            {state?.context?.gameLog?.map((log: any, idx: number) => (
+              <li key={idx} className='text-xs'>
+                {log}
+              </li>
+            ))}
+        </ul>
       </div>
     </div>
   );
