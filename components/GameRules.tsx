@@ -1,6 +1,6 @@
 const GameRules = () => {
   return (
-    <div className="max-w-2xl my-4 mx-auto bg-slate-700 rounded p-4 shadow-xs text-xs">
+    <div className="max-w-2xl my-4 mx-auto bg-slate-900 rounded-xl p-4 shadow-xs text-xs">
       <h1 className="text-sm font-semibold mb-2">Codenames Rules</h1>
 
       <h2 className="text-xs font-semibold mb-1">Objective</h2>

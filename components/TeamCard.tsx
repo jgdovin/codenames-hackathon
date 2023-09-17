@@ -37,6 +37,7 @@ const TeamCard = ({
 
   const bgColor =
     activeTeamColor(state) === color ? `bg-${color}-900` : 'bg-slate-700';
+  const shadowColor = activeTeamColor(state) === color ? `${color}-800` : 'slate-600';
 
   return (
     <div className='flex flex-col w-64 bg-slate-700 pt-20 place-items-center text-slate-100'>
@@ -80,10 +81,9 @@ const TeamCard = ({
           )}
           <ul className='flex flex-col justify-center pt-4 gap-2'>
             {state.context[`${color}Team`]?.map((member: any, idx: number) => {
-              const shadowColor = activeTeamColor(state) === color ? `${color}-900` : 'slate-600';
               return (
                <> 
-               <li className={cn(`text-xs shadow-md self-center p-1 text-center w-28 shadow-${shadowColor} border-2  rounded border-${shadowColor}`, bgColor)} key={idx}>
+               <li className={cn(`text-xs shadow-md self-center p-1 text-center w-28 shadow-${shadowColor} border-2  rounded border-${shadowColor}`)} key={idx}>
                   {state.context.players[member]}
                 </li>
             </>
@@ -99,7 +99,7 @@ const TeamCard = ({
           </p>
           {state.context[`${color}Spymaster`] && (
           <ul className='flex flex-col justify-center pt-4 gap-2'>
-            <li className={cn(`text-xs shadow-md self-center p-1 text-center w-28 border-2  rounded`)}>
+            <li className={cn(`text-xs shadow-md self-center p-1 text-center w-28 rounded shadow-${shadowColor} border-2  border-${shadowColor}`)}>
             {state.context.players[state.context[`${color}Spymaster`]]}
             </li>
           </ul>

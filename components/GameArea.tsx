@@ -31,7 +31,7 @@ const wrapper = (children: any, state: any, room: string) => {
           Start Game
         </button>
       ) : null}
-      <div className="flex flex-col w-full max-w-7xl">{children}</div>
+      <div className="flex flex-col">{children}</div>
       <TeamCard state={state} color="blue" room={room} />
     </div>
   );
