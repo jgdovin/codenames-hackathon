@@ -52,7 +52,7 @@ const TeamCard = ({
       </div>
       <div
         className={cn(
-          `w-5/6 h-96 p-4 rounded-xl border border-slate-500 flex flex-col gap-4 transition transition-all`,
+          `w-5/6 h-96 p-4 rounded-xl border border-slate-500 flex flex-col gap-4 transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-2x`,
           bgColor
         )}
       >

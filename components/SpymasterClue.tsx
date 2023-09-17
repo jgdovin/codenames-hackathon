@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { GetUserInfo } from "@/lib/hooks/getUserInfo";
+import { cn } from "@/lib/util/cn";
 
 const SpymasterClue = ({
   state,
@@ -19,6 +20,7 @@ const SpymasterClue = ({
   const [clue, setClue] = useState("");
   const [clueCount, setClueCount] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
+  const [clueEnabled, setClueEnabled] = useState(false);
 
   const userInfo = GetUserInfo();
   const { userId } = userInfo;
@@ -30,6 +32,7 @@ const SpymasterClue = ({
           onClick={() => {
             setIsOpen(false);
             setClueCount(`${count}`);
+            setClueEnabled(true);
           }}
           key={count}
           className="cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground"
@@ -41,12 +44,12 @@ const SpymasterClue = ({
   );
 
   return (
-    <div className='h-11'>
+    <div className='h-8 flex gap-2'>
       {playerIsActiveSpymaster(state, userId) && (
         <>
           <input
             type="text"
-            className="bg-gray-200 appearance-none text-xs border-2 border-gray-200 rounded w-96 py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:bg-white"
+            className="bg-gray-200 appearance-none font-bold border-2 border-gray-200 rounded w-48 py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:bg-white"
             onChange={(e) => setClue(e.target.value)}
           />
           <Popover
@@ -85,7 +88,8 @@ const SpymasterClue = ({
                 payload: JSON.stringify({ clue, clueCount }),
               });
             }}
-            className="bg-green-700 text-white p-2 rounded-xl w-32"
+            disabled={!clueEnabled}
+            className={cn("bg-green-700 text-white p-1 rounded-xl w-28", !clueEnabled && 'bg-slate-800 cursor-default')}
           >
             Give Clue
           </button>

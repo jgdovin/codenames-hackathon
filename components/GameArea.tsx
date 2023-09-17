@@ -100,7 +100,7 @@ const GameArea = ({ room }: { room: string; }) => {
 
         {
           process.env.NEXT_PUBLIC_DEBUG && (
-            <div><button onClick={() => progressState(state)}>Next State</button></div>
+            <div className='absolute top-14 left-14'><button onClick={() => progressState(state)}>Next State</button></div>
           )
         }
 
