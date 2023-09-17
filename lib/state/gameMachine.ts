@@ -235,7 +235,7 @@ export const gameMachine = createMachine(
 
         context.gameLog = [`${context.players[userId]} revealed ${context.cards[id].word}`, ...context.gameLog];
         if (cardColor === 'black') {
-          context.winner = playerIsOnTeam({context}, userId, 'red') ? 'blue' : 'red';
+          context.winner = playerIsOnTeam({context}, 'red', userId) ? 'blue' : 'red';
         }
         const teamDesignation = `${cardColor}teamCardsRemaining` as
           | 'redteamCardsRemaining'

@@ -18,21 +18,27 @@ const SpymasterClue = ({
   room: string;
 }) => {
   const [clue, setClue] = useState("");
-  const [clueCount, setClueCount] = useState("0");
+  const [clueCount, setClueCount] = useState("notSet");
   const [isOpen, setIsOpen] = useState(false);
   const [clueEnabled, setClueEnabled] = useState(false);
 
   const userInfo = GetUserInfo();
   const { userId } = userInfo;
 
+  const enableClue = (ignoreCount = false) => {
+    if ((clueCount !== 'notSet' || ignoreCount) && clue) {
+      setClueEnabled(true);
+    }
+  }
+
   const clueCountOptions = Array.from({ length: 10 }, (_, i) => i).map(
     (count) => {
       return (
         <li
           onClick={() => {
-            setIsOpen(false);
             setClueCount(`${count}`);
-            setClueEnabled(true);
+            setIsOpen(false);
+            enableClue(true);
           }}
           key={count}
           className="cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground"
@@ -50,7 +56,7 @@ const SpymasterClue = ({
           <input
             type="text"
             className="bg-gray-200 appearance-none font-bold border-2 border-gray-200 rounded w-48 py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:bg-white"
-            onChange={(e) => setClue(e.target.value)}
+            onChange={(e) => { enableClue(); setClue(e.target.value) }}
           />
           <Popover
             open={isOpen}
@@ -60,7 +66,7 @@ const SpymasterClue = ({
           >
             <PopoverTrigger>
               <div className=" border p-1 h-8 w-8 rounded-lg border-slate-300 bg-black text-slate-200">
-                {clueCount}
+                {clueCount === 'notSet' ? '?' : clueCount}
               </div>
             </PopoverTrigger>
             <PopoverContent className="bg-slate-500 w-96 h-16">
@@ -68,8 +74,9 @@ const SpymasterClue = ({
                 {clueCountOptions}
                 <li
                   onClick={() => {
-                    setIsOpen(false);
                     setClueCount("ꝏ");
+                    setIsOpen(false);
+                    enableClue(true);
                   }}
                   className="cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground"
                 >

@@ -18,6 +18,7 @@ export const playerIsOnAnyTeam = (state: any, userId: string) => {
 }
 
 export const playerIsOnTeam = (state: any, color: string, userId: string) => {
+  console.log(state?.context)
   return state?.context[`${color}Team`]?.includes(userId);
 }
 

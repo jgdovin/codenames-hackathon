@@ -1,6 +1,4 @@
-
-{
-  "words": [
+[
 {"word": "AFRICA", "category": "official"},
 {"word": "AGENT", "category": "official"},
 {"word": "AIR", "category": "official"},
@@ -402,4 +400,3 @@
 {"word": "WORM", "category": "official"},
 {"word": "YARD", "category": "official"}
 ]
-}

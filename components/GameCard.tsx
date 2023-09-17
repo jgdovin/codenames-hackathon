@@ -90,7 +90,8 @@ const GameCard = ({
         className={cn(
           'w-full h-24 flex items-center justify-center rounded-lg border-2 border-black relative group',
           getTextColor(cardColor),
-          cardColor
+          cardColor,
+          !card.revealed && 'transition duration-500 transform hover:scale-110 hover:shadow-2x'
         )}
       >
         <p className='text-xl font-bold overflow-hidden overflow-ellipsis p-2 rounded'>{card.word}</p>
@@ -101,7 +102,7 @@ const GameCard = ({
                 {card.votes.map((vote) => (
                   <div
                     key={vote}
-                    className='h-4 w-16 text-xs self-end overflow-hidden overflow-ellipsis pl-1 bg-[#b99d78] text-black font-bold border-2 border-black rounded'
+                    className='h-5 w-16 text-xs self-end overflow-hidden overflow-ellipsis pl-1 bg-[#b99d78] text-black font-bold border-2 border-black rounded'
                   >
                     {state.context.players[vote]}
                   </div>
