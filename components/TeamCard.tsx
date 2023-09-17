@@ -100,9 +100,6 @@ const TeamCard = ({
         <div className='border-1 rounded-lg p-2'>
           <h1 className={`mt-4 text-center text-slate-300`}>Spymaster</h1>
           <hr />
-          <p className='my-2 ml-4 text-xs'>
-            {state.context.players[state.context[`${color}Spymaster`]]}
-          </p>
           {state.context[`${color}Spymaster`] && (
             <ul className='flex flex-col justify-center gap-2 pt-4'>
               <li
