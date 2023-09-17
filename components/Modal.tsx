@@ -1,34 +1,31 @@
+import { activeTeamColor } from '@/lib/user';
+import { cn } from '@/lib/util/cn';
 import React, { useState, useEffect } from 'react';
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode
+  children: React.ReactNode,
+  activeColor: string
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(isOpen);
+const Modal: React.FC<ModalProps> = ({ children, activeColor }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
   useEffect(() => {
-    setIsModalOpen(isOpen);
+  // Automatically close the modal after 2 seconds
 
-    // Automatically close the modal after 2 seconds
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        setIsModalOpen(false);
-        onClose();
-      }, 2000);
+    const timer = setTimeout(() => {
+      setIsModalOpen(false);
+    }, 2000);
 
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, onClose]);
+  }, []);
 
+  const borderColor = activeColor === 'red' ? 'border-red-700' : 'border-blue-700';
   return (
     <>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="modal-bg fixed inset-0 bg-black opacity-50"></div>
-          <div className="modal-content bg-white p-4 rounded-lg shadow-md">
+          <div className="modal-bg fixed inset-0 bg-black opacity-50 z-40"></div>
+          <div className={cn("modal-content z-50 bg-neutral font-bold p-4 rounded-lg shadow-md text-black text-5xl border-4", borderColor)}>
             {children}
           </div>
         </div>

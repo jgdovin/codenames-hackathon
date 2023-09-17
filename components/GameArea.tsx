@@ -53,7 +53,6 @@ const GameArea = ({ room }: { room: string; }) => {
     if (Object.values(state.value).includes('guessing')) {
       sendAction({ action: 'end.guessing', room, userInfo });
     }
-    console.log(state.value);
   }
   
   const createGame = (force = false) => {
@@ -82,9 +81,9 @@ const GameArea = ({ room }: { room: string; }) => {
 
   const child = (
     <div className="flex flex-col gap-4">
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      {state?.context.clue && ( <Modal activeColor={activeColor}>
         {state?.context.clue}
-      </Modal>
+      </Modal> )}
       <div className="flex justify-center items-center p-4 gap-4">
         {state?.matches(`${activeColor}team.spymaster`) && (
           <SpymasterClue state={state} room={room} />
