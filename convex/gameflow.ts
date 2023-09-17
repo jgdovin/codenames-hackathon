@@ -32,18 +32,17 @@ function getColorAndTeam(index: number, redStartCards: number) {
 }
 
 export const update = mutation({
-  args: { room: v.string(), state: v.string(), machine: v.string() },
-  handler: async ( ctx, { room, state, machine }) => {
+  args: { room: v.string(), state: v.string() },
+  handler: async ( ctx, { room, state }) => {
     const existing = await ctx.db
       .query("gameflow")
       .withIndex("by_room", (q) => q.eq("room", 'lobby'))
       .unique();
 
     if (existing) {
-      await ctx.db.patch(existing._id, { state, machine });
+      await ctx.db.patch(existing._id, { state });
     } 
     await ctx.db.insert("gameflow", {
-      machine,
       state,
       room,
     });
@@ -117,7 +116,6 @@ export const createGame = mutation({
     }
 
     await ctx.db.insert("gameflow", {
-      machine: JSON.stringify(machine),
       state: JSON.stringify(machine.initialState),
       room,
     });

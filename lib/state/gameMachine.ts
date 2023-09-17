@@ -328,7 +328,6 @@ export const gameMachine = createMachine(
           context.endTurn = false;
           context.clue = '';
         }
-
         return willEnd;
       },
     },
