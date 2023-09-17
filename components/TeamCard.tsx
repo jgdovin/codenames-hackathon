@@ -1,15 +1,13 @@
 'use client';
 //text-red-800 text-blue-800 bg-blue-500 bg-red-500 bg-blue-900 bg-red-900 bg-blue-800 bg-red-800 shadow-blue-200 shadow-red-200
-import { useState } from 'react';
 import { sendAction } from '@/lib/state/gameMachineUtil';
 import { GetUserInfo } from '@/lib/hooks/getUserInfo';
 import {
   activeTeamColor,
-  playerIsSpymaster,
   playerIsOnAnyTeam,
   playerIsOnTeamAndNoSpymaster,
-  teamIsGuessing,
 } from '@/lib/user';
+import { cn } from '@/lib/util/cn';
 
 const TeamCard = ({
   color,
@@ -37,23 +35,26 @@ const TeamCard = ({
 
   if (!state) return null;
 
+  const bgColor =
+    activeTeamColor(state) === color ? `bg-${color}-900` : 'bg-slate-700';
+
   return (
     <div className='flex flex-col w-64 bg-slate-700 pt-20 place-items-center text-slate-100'>
       <div className='w-full text-center px-8 mb-4 min-h-[60px]'>
-      {state.matches(`${color}team.guessing`) && (
-          <h1 className='text-center'>
-            {capitalTC} Team is Guessing
-          </h1>
+        {state.matches(`${color}team.guessing`) && (
+          <h1 className='text-center'>{capitalTC} Team is Guessing</h1>
         )}
         {state.matches(`${color}team.spymaster`) && (
           <h1 className='text-center'>
             {capitalTC} Team Spymaster is giving a clue
           </h1>
         )}
-        
       </div>
       <div
-        className={`w-5/6 bg-${color}-900 h-96 p-4 rounded-xl border flex flex-col gap-4`}
+        className={cn(
+          `w-5/6 h-96 p-4 rounded-xl border border-slate-500 flex flex-col gap-4 transition transition-all`,
+          bgColor
+        )}
       >
         <p className='text-center mb-2'>
           {capitalTC} Team{' '}
