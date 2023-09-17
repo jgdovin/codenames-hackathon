@@ -46,6 +46,16 @@ const GameArea = ({ room }: { room: string; }) => {
   const { userId } = userInfo;
   const [isOpen, setIsOpen] = useState(false);
 
+  const progressState = (state: any) => {
+    if (Object.values(state.value).includes('spymaster')) {
+      sendAction({ action: 'give.clue', room, userInfo, payload: JSON.stringify({ clue: 'test', clueCount: 2 }) })
+    }
+    if (Object.values(state.value).includes('guessing')) {
+      sendAction({ action: 'end.guessing', room, userInfo });
+    }
+    console.log(state.value);
+  }
+  
   const createGame = (force = false) => {
     const BASE_URL =
       process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -87,6 +97,13 @@ const GameArea = ({ room }: { room: string; }) => {
 
           </div>
         )}
+
+        {
+          process.env.NEXT_PUBLIC_DEBUG && (
+            <div><button onClick={() => progressState(state)}>Next State</button></div>
+          )
+        }
+
         {state?.context.clue ? (
           <>
             <div
