@@ -134,7 +134,7 @@ const GameArea = ({ room }: { room: string; }) => {
       {state?.matches("lobby") ? (
         <GameRules />
       ) : (
-        <div className="grid grid-cols-5 bg-slate-600 rounded-xl place-items-center place-content-center gap-4 p-10 max-w-7xl w-full">
+        <div className="grid grid-cols-5 bg-slate-600 rounded-xl place-items-center place-content-center gap-4 p-10 max-w-screen-xl w-screen">
           {state?.context.cards?.map((card: any, idx: number) => (
             <GameCard key={idx} idx={idx} card={card} room={room} />
           ))}

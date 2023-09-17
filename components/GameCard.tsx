@@ -1,6 +1,6 @@
 'use client';
 
-import { GiSharpSmile } from 'react-icons/gi';
+import { GiSharpSmile, GiSpy } from 'react-icons/gi';
 import { BsPatchCheck } from 'react-icons/bs';
 import { MdOutlineThumbsUpDown, MdThumbsUpDown } from 'react-icons/md';
 
@@ -143,7 +143,7 @@ const GameCard = ({
             )}
           >
             <div className='flex justify-center items-center h-full'>
-              <GiSharpSmile className='w-10 h-10' />
+              <GiSpy className='w-14 h-14' />
             </div>
           </div>
         ) : null}
