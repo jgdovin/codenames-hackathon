@@ -31,14 +31,19 @@ const SpymasterClue = ({
     }
   }
 
+  const handleClueCountUpdate = (count: string) => {
+    setClueCount(count);
+    setIsOpen(false);
+    enableClue(true);
+  }
+    
+
   const clueCountOptions = Array.from({ length: 10 }, (_, i) => i).map(
     (count) => {
       return (
         <li
           onClick={() => {
-            setClueCount(`${count}`);
-            setIsOpen(false);
-            enableClue(true);
+            handleClueCountUpdate(`${count}`)
           }}
           key={count}
           className="cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground"
@@ -74,9 +79,7 @@ const SpymasterClue = ({
                 {clueCountOptions}
                 <li
                   onClick={() => {
-                    setClueCount("ꝏ");
-                    setIsOpen(false);
-                    enableClue(true);
+                    handleClueCountUpdate("ꝏ");
                   }}
                   className="cursor-pointer border p-1 px-2 h-7 w-7 text-sm bg-slate-700 text-primary-foreground"
                 >

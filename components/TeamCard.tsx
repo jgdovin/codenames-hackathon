@@ -1,5 +1,5 @@
 'use client';
-//text-red-800 text-blue-800 bg-blue-500 bg-red-500 bg-blue-900 bg-red-900 bg-blue-800 bg-red-800 shadow-blue-200 shadow-red-200
+//bg-blue-900 bg-red-900 shadow-red-800 shadow-blue-800 border-red-800 border-blue-800 border-slate-600 shadow-slate-600
 import { sendAction } from '@/lib/state/gameMachineUtil';
 import { GetUserInfo } from '@/lib/hooks/getUserInfo';
 import {
@@ -52,7 +52,7 @@ const TeamCard = ({
       </div>
       <div
         className={cn(
-          `w-5/6 h-96 p-4 rounded-xl border border-slate-500 flex flex-col gap-4 transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-2x`,
+          `w-5/6 h-96 p-2 rounded-xl border border-slate-500 flex flex-col gap-4 transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-2x`,
           bgColor
         )}
       >
@@ -78,12 +78,15 @@ const TeamCard = ({
           ) : (
             <></>
           )}
-          <ul>
+          <ul className='flex flex-col justify-center pt-4 gap-2'>
             {state.context[`${color}Team`]?.map((member: any, idx: number) => {
+              const shadowColor = activeTeamColor(state) === color ? `${color}-900` : 'slate-600';
               return (
-                <li className='ml-4 text-xs my-2' key={idx}>
+               <> 
+               <li className={cn(`text-xs shadow-md self-center p-1 text-center w-28 shadow-${shadowColor} border-2  rounded border-${shadowColor}`, bgColor)} key={idx}>
                   {state.context.players[member]}
                 </li>
+            </>
               );
             })}
           </ul>
@@ -94,10 +97,17 @@ const TeamCard = ({
           <p className='ml-4 text-xs my-2'>
             {state.context.players[state.context[`${color}Spymaster`]]}
           </p>
+          {state.context[`${color}Spymaster`] && (
+          <ul className='flex flex-col justify-center pt-4 gap-2'>
+            <li className={cn(`text-xs shadow-md self-center p-1 text-center w-28 border-2  rounded`)}>
+            {state.context.players[state.context[`${color}Spymaster`]]}
+            </li>
+          </ul>
+          )}
           {playerIsOnTeamAndNoSpymaster(state, color, userId) ? (
-            <div className='text-center'>
+            <div className='text-center flex justify-center'>
               <button
-                className={`bg-slate-800 p-2 m-2 text-xs border-gray-400 rounded shadow`}
+                className={`bg-slate-800 w-32 self-center p-2 m-2 text-xs border-gray-400 rounded shadow`}
                 onClick={() => {
                   joinSpymaster();
                 }}
