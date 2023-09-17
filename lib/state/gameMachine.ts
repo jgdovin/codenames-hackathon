@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { createMachine } from 'xstate';
+import { playerIsOnTeam } from '../user';
 
 export interface GameCard {
   word: string;
@@ -30,6 +31,7 @@ export interface GameContext {
   redSpymaster: string;
   blueSpymaster: string;
   gameLog: ReactNode[];
+  winner: string;
 }
 
 export interface JoinEvent {
@@ -58,6 +60,7 @@ export const gameMachine = createMachine(
       redSpymaster: '',
       blueSpymaster: '',
       gameLog: [],
+      winner: '',
     },
     on: {
       'join.team': {
@@ -114,7 +117,10 @@ export const gameMachine = createMachine(
                 actions: 'unVoteCard',
                 target: 'guessing',
               },
-              'end.guessing': '#(machine).blueteam',
+              'end.guessing': {
+                actions: 'endGuessing',
+                target: '#(machine).blueteam'
+              },
               'game.over': '#(machine).gameover',
             },
           },
@@ -157,7 +163,10 @@ export const gameMachine = createMachine(
                 actions: 'unVoteCard',
                 target: 'guessing',
               },
-              'end.guessing': '#(machine).redteam',
+              'end.guessing': {
+                actions: 'endGuessing',
+                target: '#(machine).redteam'
+              },
               'game.over': '#(machine).gameover',
             },
           },
@@ -165,6 +174,7 @@ export const gameMachine = createMachine(
         initial: 'spymaster',
       },
       gameover: {
+        entry: ['resetTurn', 'setWinner'],
         on: {
           'start.over': 'lobby',
         },
@@ -224,7 +234,9 @@ export const gameMachine = createMachine(
         context.cluesLeft -= 1;
 
         context.gameLog = [`${context.players[userId]} revealed ${context.cards[id].word}`, ...context.gameLog];
-        
+        if (cardColor === 'black') {
+          context.winner = playerIsOnTeam({context}, userId, 'red') ? 'blue' : 'red';
+        }
         const teamDesignation = `${cardColor}teamCardsRemaining` as
           | 'redteamCardsRemaining'
           | 'blueteamCardsRemaining';
@@ -284,6 +296,15 @@ export const gameMachine = createMachine(
             break;
         }
       },
+      setWinner: (context, event) => {
+        if (context.winner) return;
+        context.winner = context.redteamCardsRemaining ? 'blue' : 'red';
+      },
+      endGuessing: (context, event) => {
+        const { userId } = JSON.parse(event.user);
+        const message = `${context.players[userId]} ended their turn`;
+        context.gameLog = [message, ...context.gameLog];
+      }
     },
     guards: {
       startingTeamRed: (context) => {

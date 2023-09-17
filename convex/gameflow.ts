@@ -103,6 +103,7 @@ export const createGame = mutation({
       endTurn: false,
       cluesLeft: 0,
       gameLog: [],
+      winner: ''
     }
     
     const machine = gameMachine.withContext(context)

@@ -37,8 +37,13 @@ const wrapper = (children: any, state: any, room: string) => {
   );
 };
 
+const capitalize = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
 const GameArea = ({ room }: { room: string; }) => {
-  const { userId } = GetUserInfo();
+  const userInfo = GetUserInfo();
+  const { userId } = userInfo;
   const [isOpen, setIsOpen] = useState(false);
 
   const createGame = (force = false) => {
@@ -65,16 +70,6 @@ const GameArea = ({ room }: { room: string; }) => {
   ) as State<GameContext>;
   const activeColor = activeTeamColor(state);
 
-  /* <button onClick={() => createGame(true)}>Reset State</button> */
-  if (state?.matches('gameover')) {
-    return (
-      <div className="w-full h-screen flex flex-col justify-center">
-        <div className="h-8 mx-auto">Game Over</div>
-        <button className='bg-green-700 text-white p-4 rounded-xl w-48 mx-auto' onClick={() => createGame(true)}>Start New Game</button>
-      </div>
-    )
-  }
-
   const child = (
     <div className="flex flex-col gap-4">
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -83,6 +78,14 @@ const GameArea = ({ room }: { room: string; }) => {
       <div className="flex justify-center items-center p-4 gap-4">
         {state?.matches(`${activeColor}team.spymaster`) && (
           <SpymasterClue state={state} room={room} />
+        )}
+        {state?.matches('gameover') && (
+          <div className='text-center flex justify-center gap-6'>
+            <h1 className='text-2xl font-bold self-center'>Game Over</h1>
+            <h2 className='text-xl font-bold self-center'>{capitalize(state?.context.winner)} Team Wins!</h2>
+            <button className='bg-green-700 text-white p-2 px-6 rounded-xl mx-auto' onClick={() => createGame(true)}>New Game</button>
+
+          </div>
         )}
         {state?.context.clue ? (
           <>
@@ -104,7 +107,7 @@ const GameArea = ({ room }: { room: string; }) => {
             className={`border-2 h-12 bg-${activeColor}-950 border-${activeColor}-900 p-2 px-4 rounded`}
           >
             <button
-              onClick={() => sendAction({ action: "end.guessing", room })}
+              onClick={() => sendAction({ action: "end.guessing", room, userInfo })}
             >
               End Guessing
             </button>
