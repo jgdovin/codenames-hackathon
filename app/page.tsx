@@ -39,8 +39,8 @@ const Page = () => {
 
   return (
     <div>
-      <div className='w-screen h-screen flex flex-col gap-4 items-center justify-center'>
-        <div className='bg-slate-700 w-96 h-36 rounded-xl flex flex-col justify-center items-center gap-6'>
+      <div className='flex h-screen w-screen flex-col items-center justify-center gap-4'>
+        <div className='flex h-36 w-96 flex-col items-center justify-center gap-6 rounded-xl bg-slate-700'>
           {isEditing || !nickname ? (
             <div>
               <input
@@ -62,7 +62,7 @@ const Page = () => {
           {nickname && !isEditing && (
             <div className='text-white'>
               <button
-                className='bg-blue-500 hover:bg-blue-700 text-slate-100 font-bold py-2 px-4 rounded'
+                className='rounded bg-blue-500 px-4 py-2 font-bold text-slate-100 hover:bg-blue-700'
                 onClick={() => (window.location.href = '/game/main')}
               >
                 Join Game

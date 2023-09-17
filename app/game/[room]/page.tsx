@@ -3,11 +3,11 @@
 
 import GameArea from '@/components/GameArea';
 
-export default async function Home({params} : { params: { room: string }}) {
+export default async function Home({ params }: { params: { room: string } }) {
   const { room } = params;
 
   return (
-    <main className="flex">
+    <main className='flex'>
       <GameArea room={room} />
     </main>
   );
